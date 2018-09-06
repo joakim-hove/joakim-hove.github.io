@@ -1,0 +1,14 @@
+The data types available in ERT
+===============================
+
+
+Parameters
+----------
+
+Simulated data
+--------------
+
+Observations
+------------
+
+  
