@@ -11,7 +11,7 @@ Since reservoir models are very important for future predictions there is much
 focus on reducing the uncertainty in the models. When the field has been in
 production for some time one can use true data assembled from the producing
 field to update the model. This process is commonly called *history matching* in
-the petroleum industry, in this manual we will use the term "model updating*.
+the petroleum industry, in this manual we will use the term *model updating*.
 Before the model updating process can start you will need:
 
 1. Observation data from the producing field :math:`d`. 
