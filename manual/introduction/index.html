@@ -34,6 +34,37 @@
             
   <div class="section" id="introduction-to-ert-and-ensemble-based-methods">
 <h1>Introduction to ERT and Ensemble based methods<a class="headerlink" href="#introduction-to-ert-and-ensemble-based-methods" title="Permalink to this headline">¶</a></h1>
+<p>The reservoir model for a green field is based on a range subsurface input
+including seismic data, a geological concept, well logs and fluid samples. All
+of this data is uncertain, and it is quite obvious that the resulting reservoir
+model is quite uncertain. Although uncertain reservoir models are still the only
+tool we have when we make reservoir management decisions for the future.</p>
+<p>Since reservoir models are very important for future predictions there is much
+focus on reducing the uncertainty in the models. When the field has been in
+production for some time one can use true data assembled from the producing
+field to update the model. This process is commonly called <em>history matching</em> in
+the petroleum industry, in this manual we will use the term “model updating*.
+Before the model updating process can start you will need:</p>
+<ol class="arabic simple">
+<li>Observation data from the producing field <span class="math notranslate">\(d\)</span>.</li>
+<li>A reservoir model which has been <em>parameterized</em> with a parameter set <span class="math notranslate">\(\{\lambda\}\)</span>.</li>
+</ol>
+<p>Then the the actual model updating goes like this:</p>
+<ol class="arabic simple">
+<li>Simulate the behaviour of the field and assemble simulated data <span class="math notranslate">\(s\)</span>.</li>
+<li>Compare the simulated simulated data <span class="math notranslate">\(s\)</span> with the observed data <span class="math notranslate">\(d\)</span>.</li>
+<li>Based on the misfit between <span class="math notranslate">\(s\)</span> and <span class="math notranslate">\(d\)</span> updated parameters are
+<span class="math notranslate">\(\{\lambda'\}\)</span> are calculated.</li>
+</ol>
+<p>Model updating falls into the general category of <em>inverse problems</em> - i.e. we
+know the results and want to determine the input parameters which gave rise to
+these results.</p>
+<p>It is very important to remember that the sole reason for doing model updating
+is to be able to make better predictions for the future, the history has
+happened already anyway!</p>
+<div class="section" id="embrace-the-uncertainty">
+<h2>Embrace the uncertainty<a class="headerlink" href="#embrace-the-uncertainty" title="Permalink to this headline">¶</a></h2>
+</div>
 <div class="section" id="kalman-filter">
 <h2>Kalman filter<a class="headerlink" href="#kalman-filter" title="Permalink to this headline">¶</a></h2>
 </div>
@@ -54,6 +85,7 @@
   <h3><a href="../manual.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Introduction to ERT and Ensemble based methods</a><ul>
+<li><a class="reference internal" href="#embrace-the-uncertainty">Embrace the uncertainty</a></li>
 <li><a class="reference internal" href="#kalman-filter">Kalman filter</a></li>
 <li><a class="reference internal" href="#ensemble-kalman-filter-enkf">Ensemble Kalman Filter - EnKF</a></li>
 <li><a class="reference internal" href="#ensemble-smoother-es">Ensemble Smoother - ES</a></li>

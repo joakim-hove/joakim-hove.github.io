@@ -1,6 +1,42 @@
 Introduction to ERT and Ensemble based methods
 ==============================================
 
+The reservoir model for a green field is based on a range subsurface input
+including seismic data, a geological concept, well logs and fluid samples. All
+of this data is uncertain, and it is quite obvious that the resulting reservoir
+model is quite uncertain. Although uncertain reservoir models are still the only
+tool we have when we make reservoir management decisions for the future.
+
+Since reservoir models are very important for future predictions there is much
+focus on reducing the uncertainty in the models. When the field has been in
+production for some time one can use true data assembled from the producing
+field to update the model. This process is commonly called *history matching* in
+the petroleum industry, in this manual we will use the term "model updating*.
+Before the model updating process can start you will need:
+
+1. Observation data from the producing field :math:`d`. 
+2. A reservoir model which has been *parameterized* with a parameter set :math:`\{\lambda\}`. 
+
+Then the the actual model updating goes like this:
+
+1. Simulate the behaviour of the field and assemble simulated data :math:`s`. 
+2. Compare the simulated simulated data :math:`s` with the observed data :math:`d`. 
+3. Based on the misfit between :math:`s` and :math:`d` updated parameters are
+   :math:`\{\lambda'\}` are calculated.   
+
+Model updating falls into the general category of *inverse problems* - i.e. we
+know the results and want to determine the input parameters which gave rise to
+these results.
+
+
+It is very important to remember that the sole reason for doing model updating
+is to be able to make better predictions for the future, the history has
+happened already anyway!
+
+
+Embrace the uncertainty
+-----------------------
+
 Kalman filter
 -------------
 
