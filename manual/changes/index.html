@@ -41,7 +41,13 @@
   <ul>
 <li><a class="reference internal" href="#">Release notes for ERT</a><ul>
 <li><a class="reference internal" href="#version-2-3">Version 2.3</a></li>
-<li><a class="reference internal" href="#version-2-2">Version 2.2</a></li>
+<li><a class="reference internal" href="#version-2-2">Version 2.2</a><ul>
+<li><a class="reference internal" href="#ert-application">2.2: ert application</a></li>
+<li><a class="reference internal" href="#libres">2.2: libres</a></li>
+<li><a class="reference internal" href="#libecl">2.2: libecl</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#version-2-1">Version 2.1</a></li>
 </ul>
 </li>
 </ul>
@@ -83,6 +89,513 @@
 </div>
 <div class="section" id="version-2-2">
 <h2>Version 2.2<a class="headerlink" href="#version-2-2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="ert-application">
+<h3>2.2: ert application<a class="headerlink" href="#ert-application" title="Permalink to this headline">¶</a></h3>
+<p>Version 2.2.1 September 2017 PR: 1 - 66
+Cherry-picked: 70</p>
+<p>Misc:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Using res_config changes from libres [16]</li>
+<li>files moved from libecl to libres: [51].</li>
+<li>replaced ert.enkf with res.enkf [56]</li>
+<li>Created ErtVersion: [61, 66].</li>
+<li>Using res_config: [62]</li>
+<li>Removed dead workflow files: [64]</li>
+</ul>
+</div></blockquote>
+<p>Build and testing:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Cleanup after repo split [1, 2, 3 , 4, 5 , 6]</li>
+<li>Added test_install functionality [7]</li>
+<li>Added travis build script for libecl+libres+ert:
+[15, 17, 18, 19, 21, 26, 27, 39, 52-55, 63</li>
+<li>MacOS build error: [28].</li>
+<li>Created simple gui_test bin/gui_test [32]</li>
+<li>cmake - create symlink: [41, 42, 43]</li>
+<li>Initial Python3 testing [58, 60].</li>
+</ul>
+</div></blockquote>
+<p>Queue and running:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Added base run model - gui model updates: [20].</li>
+<li>Added single simulation pretest running [33, 36, 50, 67].</li>
+<li>Add run_id to simulation batches.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="libres">
+<h3>2.2: libres<a class="headerlink" href="#libres" title="Permalink to this headline">¶</a></h3>
+<p>Version 2.2.9 September 2017 PR: 1 - 104
+Cherry-picks: [106, 108, 110, 118, 121, 122, 123, 127]</p>
+<p>Misc:</p>
+<blockquote>
+<div><ul class="simple">
+<li>implement legacy from ert.xxx [1, 20, 21, 22]</li>
+<li>Setting up libres_util and moving ert_log there [13, 44, 48].</li>
+<li>Added subst_list + block_fs functionality to res_util - moved from
+libecl [27, 68, 74].</li>
+<li>Do not generate parameters.txt if no GEN_KW is specified.[89]</li>
+<li>Started using RES_VERSION [91].</li>
+<li>CONFIG_PATH subtitution settings - bug fixed[43, 96].</li>
+<li>Will load summary if GEN_DATA is present [123, 127]</li>
+</ul>
+</div></blockquote>
+<p>Build and test fixes:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Simple functionality to do post-install testing[3]</li>
+<li>Use libecl as cmake target[6,15]</li>
+<li>removed stale binaries [7, 9]</li>
+<li>travis will build all repositories [23].</li>
+<li>Travis + OSX [69, 72]</li>
+<li>Remove statoil specific settings from build sytem [38].</li>
+<li>Travis split for parallell builds [79].</li>
+</ul>
+</div></blockquote>
+<p>Config refactor:</p>
+<blockquote>
+<div><p>In this release cycle there have been large amount of changes to the
+code configuring the ERT state; the purpose of these changes has
+been to prepare for further development with Everest. The main net
+change is that a new configuration object - res_config has been
+created ,which holds all the configuration subobjects:</p>
+<blockquote>
+<div>[10, 14, 35, 39, 45, 52, 54, 58-62, 66, 75]</div></blockquote>
+</div></blockquote>
+<p>Queue layer:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Improved logging [17, 37].</li>
+<li>Funcionality to create a queue_config object copy [36].</li>
+</ul>
+<p>As part of this development cycle the job_dispatch script has been
+included in the libres distribution. There are many PR’s related to
+this script:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>[28, 40, 41, 51, 53, 63, 64, 83, 84, 85,93, 94, 95, 97-99,</dt>
+<dd>101, 103, 108, 110]</dd>
+</dl>
+</div></blockquote>
+<ul class="simple">
+<li>Create a common run_id for one batch of simulations, and generally
+treat one batch of simulations as one unit, in a better way than
+previously: [42, 67]</li>
+<li>Added PPU (Paay Per Use) code to LSF driver [71].</li>
+<li>Workflow job PRE_SIMULATION_COPY [73, 88].</li>
+<li>Allow to unset QUEUE_OPTION [87].</li>
+<li>Jobs failing due to dead nodes are restarted [100].</li>
+</ul>
+</div></blockquote>
+<p>Documentation:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Formatting bugs: [49, 50]</li>
+<li>Removed doxygen + build rst [29]</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="libecl">
+<h3>2.2: libecl<a class="headerlink" href="#libecl" title="Permalink to this headline">¶</a></h3>
+<p>Version 2.2.0 September 2017 PR: 1 - 169
+Open PR: 108, 145</p>
+<p>Grid:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Extracted implementation ecl_nnc_geometry [1, 66, 75, 78, 80, 109].</li>
+<li>Fix bug in cell_contains for mirrored grid [51, 53].</li>
+<li>Extract subgrid from grid [56].</li>
+<li>Expose mapaxes [63, 64].</li>
+<li>grid.get_lgr - numbered lookup [83]</li>
+<li>Added NUMRES values to EGRID header [125].</li>
+</ul>
+</div></blockquote>
+<p>Build &amp; testing:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Removed warnings - added pylint [4, 5, 6, 10, 11, 12]</li>
+<li>Accept any Python 2.7.x version [17, 18]</li>
+<li>Remove ERT testing &amp; building [3, 19]</li>
+<li>Changes to Python/cmake machinery [25, 30, 31, 32, 49, 52, 62].</li>
+<li>Added cmake config file [33, 44, 45, 47].</li>
+<li>Only <em>one</em> library [54, 55, 58, 69, 73, 77, 91, 133]</li>
+<li>Removed stale binaries [59].</li>
+<li>Require cmake &gt;= 2.8.12 [67].</li>
+<li>Fix build on OSX [87, 88, 95, 103].</li>
+<li>Fix broken behavior with internal test data [97].</li>
+<li>Travis - compile with -Werror [122, 123, 127, 130]</li>
+<li>Started to support Python3 syntax [150, 161]</li>
+<li>Add support for paralell builds on Travis [149]</li>
+</ul>
+</div></blockquote>
+<p>libecl now fully supports OSX. On Travis it is compiled with
+-Werror=all which should protect against future warnings.</p>
+<p>C++:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Removed use of deignated initializers [7].</li>
+<li>Memory leak in EclFilename.cpp [14].</li>
+<li>Guarantee C linkage for ecl_data_type [65].</li>
+<li>New smspec overload [89].</li>
+<li>Use -std=c++0x if -std=c++11 is unavailable [118]</li>
+<li>Make all of (previous( libutil compile with C++ [162]</li>
+</ul>
+</div></blockquote>
+<p>Well:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Get well rates from restart files [8,20].</li>
+<li>Test if file exists before load [111].</li>
+<li>Fix some warnings [169]</li>
+</ul>
+</div></blockquote>
+<p>Core:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Support for variable length strings in binary eclipse files [13, 146].</li>
+<li>Renamed root package ert -&gt; ecl [21]</li>
+<li>Load INTERSECT summary files with NAMES instead WGNAMES [34 - 39].</li>
+<li>Possible memory leak: [61]</li>
+<li>Refactored binary time search in __get_index_from_sim_time() [113]</li>
+<li>Possible to mark fortio writer as “failed” - will unlink on close [119].</li>
+<li>Allow keywords of more than 8 characters [120, 124].</li>
+<li>ecl_sum writer: Should write RESTART keyword [129, 131]</li>
+<li>Made EclVersion class [160]</li>
+<li>Functionality to dump an index file for binary files: [155, 159, 163, 166, 167]</li>
+</ul>
+</div></blockquote>
+<p>Misc:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Added legacy pacakge ert/ [48, 99]</li>
+<li>Improved logging - adding enums for og levels [90, 140, 141]</li>
+<li>Refactored to use snake_case instead of CamelCase [144, 145]</li>
+</ul>
+</div></blockquote>
+<hr class="docutils" />
+<p>Version 2.1.0 February 2017  PR: 1150 - 1415
+Open PR: 1352, 1358, 1362</p>
+<p>Queue system/workflows:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Functionality to blacklist nodes from LSF [1240, 1256, 1258, 1274, 1412, 1415].</li>
+<li>Use bhist command to check lsf job status if job has expired from bjobs [1301].</li>
+<li>Debug output from torque goes to stdout [1151].</li>
+<li>Torque driver will not abort if qstat returns invalid status [1411].</li>
+<li>Simulation status USER_EXIT - count as failed [1166].</li>
+<li>Added Enum identifier ‘JOB_QUEUE_DO_KILL_NODE_FAILURE [1268].</li>
+<li>Have deprecated the ability to set queue options directly on the drivers [1288].</li>
+<li>Added system for version specific loading for workflow job model
+description files [1177].</li>
+<li>Job loader should not try to load from directory [1187].</li>
+<li>Refactoring of max runtime - initiated from WPRO [1237].</li>
+<li>Determine which nodes are running a job [1251].</li>
+</ul>
+</div></blockquote>
+<p>Build updates:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Check if python modules are present in the required version [1150].</li>
+<li>Do not build ERT_GUI if PyQt4 is not found [1150, 1230].</li>
+<li>Do not fail build numpy is not found [1153].</li>
+<li>Allow for user provided CMAKE_C_FLAGS on linux [1300].</li>
+<li>Require exactly version 2.7 of Python [1307].</li>
+<li>Travis testing improvements [1363].</li>
+<li>Removed devel/ directory from source [1196].</li>
+<li>Setting correct working directory, and build target dependency
+for sphinx-apidoc / html generation [1385].</li>
+</ul>
+</div></blockquote>
+<p>Eclipse library:</p>
+<blockquote>
+<div><ul class="simple">
+<li>C++ move constructor and operator= for smspec_node [1155, 1200].</li>
+<li>fortio_ftruncate( ) [1161].</li>
+<li>INIT writer will write keywords DEPTH, DX, DY, DZ [1164, 1172, 1311, 1388].</li>
+<li>Grid writer will take unit system enum argument [1164].</li>
+<li>New function ecl_kw_first_different( ) [1165].</li>
+<li>Completion variables can be treated as totals [1167].</li>
+<li>Fixed bug in ecl_kw_compare_numeric( ) [1168].</li>
+<li>Refactored / inlined volume calculations in ecl_grid [1173, 1184].</li>
+<li>Made function ecl_kw_size_and_type_equal() public [1192].</li>
+<li>Fixed bug in ecl_grid_cell_contains() [1402, 1404, 1195, 1419].</li>
+<li>OOM bug in ecl_kw_grdecl loader for large files [1207].</li>
+<li>Cache cell volumes in ecl_grid [1228].</li>
+<li>Geertsma / gravity functionality [1227, 1284, 1289, 1292, 1364, 1408].</li>
+<li>Summary + restart - will allow some keyword differences [1296].</li>
+<li>Implemented ecl_rst_file_open_write_seek( ) [1236].</li>
+<li>Optionally apply mapaxes [1242, 1281].</li>
+<li>Expose and use ecl_file_view datastructere - stop using ‘blocks’ in ecl_file objects [1250].</li>
+<li>ecl_sum will internalize Aquifer variables [1275].</li>
+<li>Make sure region properties RxxT are marked as total + depreecated some properties [1285].</li>
+<li>ecl_kw_resize() + C++ operator[] [1316]</li>
+<li>Added small C++ utility to create eclipse filenames[1396].</li>
+<li>Make sure restart and INIT files are written with correct unit ID [1399, 1407].</li>
+<li>Skip keyword data type: ‘C010’ without failing [1406, 1410].</li>
+<li>Adding parsing of the last (optional) config token for the SLAVES kwd [1409].</li>
+<li>Add nnc index to the information exported by ecl_nnc_export() [1204].</li>
+<li>Marked solvent related total keywords ?NIT and ?NPT.* as totals [1241].</li>
+<li>Top active cell in grid [1322].</li>
+<li>Added absolute epsilon to ecl_kw comparsion [1345,1351].</li>
+</ul>
+</div></blockquote>
+<p>Smoother, updates and ‘running’:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Fixed bug with local updates of GEN_DATA [1291].</li>
+<li>Changed default MDA weights and removed file input [1156, 1190, 1191].</li>
+<li>Bug in handling of failed realisations [1163].</li>
+<li>Fix bug missing assignment of analysis module in ES-MDA [1179].</li>
+<li>OpenMP implementation of fwd_step [1185, 1324,1342].</li>
+<li>Removes the ability to update dynamic variables [1189].</li>
+<li>Allow max CV FOLD to be the number of ensembles [1205, 1208].</li>
+<li>Fix for min_realizations logic [1206].</li>
+<li>Can assign a specific analyis module for one local update [1224].</li>
+<li>Handle updates when some summary relaisations are “too short” [1400, 1405].</li>
+<li>Extending hook manager to support PRE_UPDATE and POST_UPDATE hooks [1340,1360].</li>
+<li>RML logging is on by default [1318].</li>
+<li>Changed default ENKF_ALPHA value to 3.0 [??]</li>
+<li>Implemented subsspacce inversion algorithm [1334, 1344].</li>
+</ul>
+</div></blockquote>
+<p>libgeometry:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Added function to create new geo_surface (i.e. IRAP) object [1308].</li>
+<li>Get (x, y) pos from surface [1395].</li>
+</ul>
+</div></blockquote>
+<p>Python code:</p>
+<blockquote>
+<div><ul class="simple">
+<li>cwrap has been moved out to stand-alone module, out of ert
+package [1159, 1320, 1325, 1326, 1328, 1332, 1338, 1341, 1343, 1347, 1350, 1353]</li>
+<li>Simplified loading of shared libraries [1234].</li>
+<li>Python3 preparations [1231, 1347].</li>
+<li>Added __repr__ methods: [1266, 1327, 1329, 1331, 1348, 1373, 1375, 1377, 1384, 1387].</li>
+<li>Implement __getitem__( ) for gen_data [1331].</li>
+<li>Removed cstring_obj Python class [1387].</li>
+<li>EclKW.numpy_array returns shared buffer ndarray [1180].</li>
+<li>Minor bug in ecl_kw.py [1171].</li>
+<li>Added EclKW.numpyView( ) and EclKW.numpyCopy( ) [1188].</li>
+<li>Bug in EclKW slice access [1203].</li>
+<li>Expose active_list better in Python [1392].</li>
+<li>&#64;TYPE&#64;_vector suppports negative indices in __getitem__ and
+__setitem__; added repr method [1378].</li>
+<li>added root() methdo ert/__init__.py [1293].</li>
+</ul>
+</div></blockquote>
+<p>GUI / Configuration / Documentation</p>
+<blockquote>
+<div><ul class="simple">
+<li>Bug when viewing plots while simulating [1157.]</li>
+<li>Bug when plotting short vectors [1303].</li>
+<li>Completely refactored the ERT Gui event system [1158, 1162].</li>
+<li>Marked keywords INIT_SECTION and SCHEDULE_FILE as deprecated [1181].</li>
+<li>Removed outdated keywords from documentation [1390].</li>
+<li>Documented UMASK keyword [1186].</li>
+<li>ConfigParser: Can turn off validation + warnings [1233, 1249, 1287].</li>
+<li>Make ies advanced option only [1401].</li>
+<li>Removing MAX_RUNNING_LOCAL and MAX_RUNNING_LSF from user doc [1398].</li>
+<li>Apply plot style to other plots [1397].</li>
+<li>Fig bug in initialization when out of range [1394].</li>
+<li>Added new object for generic config settings [1391].</li>
+<li>Changes to plot settings [11359,376,1380,1382,1386].</li>
+<li>Fix bug in load case manually [1368].</li>
+<li>Documentation of plugins [1194].</li>
+<li>Changed all time handling to UTC. This will affect loading old cases [1229, 1257].</li>
+<li>Removed keyword QC_PATH + updated GRID [1263].</li>
+<li>Making sure the ertshell is creating the run path [1280].</li>
+<li>Create Doxygen [1277,1278,1294,1309,1317].</li>
+<li>Ability to run analysis from GUI [1314].</li>
+<li>Improved documentation of priors [1319].</li>
+<li>Bug in config parsing with relative paths [1333].</li>
+<li>Field documentation updates [1337].</li>
+</ul>
+</div></blockquote>
+<p>libwecl_well:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Internalize rates for wells and connections in the well library
+[1403].</li>
+<li>New function well_ts_get_name() [1393].</li>
+</ul>
+</div></blockquote>
+<p>libutil:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Functions for parsing and outputting dates in ISO format[1248].</li>
+<li>stringlist_join - like Python str.join [1243].</li>
+<li>bug in matrix_dgemm [1286].</li>
+<li>Resurrected block_fs utilities from the past [1297].</li>
+<li>Slicing for runpath_list [1356].</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="version-2-1">
+<h2>Version 2.1<a class="headerlink" href="#version-2-1" title="Permalink to this headline">¶</a></h2>
+<p>Version 2.1.0 February 2017  PR: 1150 - 1415
+Open PR: 1352, 1358, 1362</p>
+<p>Queue system/workflows:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Functionality to blacklist nodes from LSF [1240, 1256, 1258, 1274, 1412, 1415].</li>
+<li>Use bhist command to check lsf job status if job has expired from bjobs [1301].</li>
+<li>Debug output from torque goes to stdout [1151].</li>
+<li>Torque driver will not abort if qstat returns invalid status [1411].</li>
+<li>Simulation status USER_EXIT - count as failed [1166].</li>
+<li>Added Enum identifier ‘JOB_QUEUE_DO_KILL_NODE_FAILURE [1268].</li>
+<li>Have deprecated the ability to set queue options directly on the drivers [1288].</li>
+<li>Added system for version specific loading for workflow job model
+description files [1177].</li>
+<li>Job loader should not try to load from directory [1187].</li>
+<li>Refactoring of max runtime - initiated from WPRO [1237].</li>
+<li>Determine which nodes are running a job [1251].</li>
+</ul>
+</div></blockquote>
+<p>Build updates:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Check if python modules are present in the required version [1150].</li>
+<li>Do not build ERT_GUI if PyQt4 is not found [1150, 1230].</li>
+<li>Do not fail build numpy is not found [1153].</li>
+<li>Allow for user provided CMAKE_C_FLAGS on linux [1300].</li>
+<li>Require exactly version 2.7 of Python [1307].</li>
+<li>Travis testing improvements [1363].</li>
+<li>Removed devel/ directory from source [1196].</li>
+<li>Setting correct working directory, and build target dependency
+for sphinx-apidoc / html generation [1385].</li>
+</ul>
+</div></blockquote>
+<p>Eclipse library:</p>
+<blockquote>
+<div><ul class="simple">
+<li>C++ move constructor and operator= for smspec_node [1155, 1200].</li>
+<li>fortio_ftruncate( ) [1161].</li>
+<li>INIT writer will write keywords DEPTH, DX, DY, DZ [1164, 1172, 1311, 1388].</li>
+<li>Grid writer will take unit system enum argument [1164].</li>
+<li>New function ecl_kw_first_different( ) [1165].</li>
+<li>Completion variables can be treated as totals [1167].</li>
+<li>Fixed bug in ecl_kw_compare_numeric( ) [1168].</li>
+<li>Refactored / inlined volume calculations in ecl_grid [1173, 1184].</li>
+<li>Made function ecl_kw_size_and_type_equal() public [1192].</li>
+<li>Fixed bug in ecl_grid_cell_contains() [1402, 1404, 1195, 1419].</li>
+<li>OOM bug in ecl_kw_grdecl loader for large files [1207].</li>
+<li>Cache cell volumes in ecl_grid [1228].</li>
+<li>Geertsma / gravity functionality [1227, 1284, 1289, 1292, 1364, 1408].</li>
+<li>Summary + restart - will allow some keyword differences [1296].</li>
+<li>Implemented ecl_rst_file_open_write_seek( ) [1236].</li>
+<li>Optionally apply mapaxes [1242, 1281].</li>
+<li>Expose and use ecl_file_view datastructere - stop using ‘blocks’ in ecl_file objects [1250].</li>
+<li>ecl_sum will internalize Aquifer variables [1275].</li>
+<li>Make sure region properties RxxT are marked as total + depreecated some properties [1285].</li>
+<li>ecl_kw_resize() + C++ operator[] [1316]</li>
+<li>Added small C++ utility to create eclipse filenames[1396].</li>
+<li>Make sure restart and INIT files are written with correct unit ID [1399, 1407].</li>
+<li>Skip keyword data type: ‘C010’ without failing [1406, 1410].</li>
+<li>Adding parsing of the last (optional) config token for the SLAVES kwd [1409].</li>
+<li>Add nnc index to the information exported by ecl_nnc_export() [1204].</li>
+<li>Marked solvent related total keywords ?NIT and ?NPT.* as totals [1241].</li>
+<li>Top active cell in grid [1322].</li>
+<li>Added absolute epsilon to ecl_kw comparsion [1345,1351].</li>
+</ul>
+</div></blockquote>
+<p>Smoother, updates and ‘running’:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Fixed bug with local updates of GEN_DATA [1291].</li>
+<li>Changed default MDA weights and removed file input [1156, 1190, 1191].</li>
+<li>Bug in handling of failed realisations [1163].</li>
+<li>Fix bug missing assignment of analysis module in ES-MDA [1179].</li>
+<li>OpenMP implementation of fwd_step [1185, 1324,1342].</li>
+<li>Removes the ability to update dynamic variables [1189].</li>
+<li>Allow max CV FOLD to be the number of ensembles [1205, 1208].</li>
+<li>Fix for min_realizations logic [1206].</li>
+<li>Can assign a specific analyis module for one local update [1224].</li>
+<li>Handle updates when some summary relaisations are “too short” [1400, 1405].</li>
+<li>Extending hook manager to support PRE_UPDATE and POST_UPDATE hooks [1340,1360].</li>
+<li>RML logging is on by default [1318].</li>
+<li>Changed default ENKF_ALPHA value to 3.0 [??]</li>
+<li>Implemented subsspacce inversion algorithm [1334, 1344].</li>
+</ul>
+</div></blockquote>
+<p>libgeometry:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Added function to create new geo_surface (i.e. IRAP) object [1308].</li>
+<li>Get (x, y) pos from surface [1395].</li>
+</ul>
+</div></blockquote>
+<p>Python code:</p>
+<blockquote>
+<div><ul class="simple">
+<li>cwrap has been moved out to stand-alone module, out of ert
+package [1159, 1320, 1325, 1326, 1328, 1332, 1338, 1341, 1343, 1347, 1350, 1353]</li>
+<li>Simplified loading of shared libraries [1234].</li>
+<li>Python3 preparations [1231, 1347].</li>
+<li>Added __repr__ methods: [1266, 1327, 1329, 1331, 1348, 1373, 1375, 1377, 1384, 1387].</li>
+<li>Implement __getitem__( ) for gen_data [1331].</li>
+<li>Removed cstring_obj Python class [1387].</li>
+<li>EclKW.numpy_array returns shared buffer ndarray [1180].</li>
+<li>Minor bug in ecl_kw.py [1171].</li>
+<li>Added EclKW.numpyView( ) and EclKW.numpyCopy( ) [1188].</li>
+<li>Bug in EclKW slice access [1203].</li>
+<li>Expose active_list better in Python [1392].</li>
+<li>&#64;TYPE&#64;_vector suppports negative indices in __getitem__ and
+__setitem__; added repr method [1378].</li>
+<li>added root() methdo ert/__init__.py [1293].</li>
+</ul>
+</div></blockquote>
+<p>GUI / Configuration / Documentation</p>
+<blockquote>
+<div><ul class="simple">
+<li>Bug when viewing plots while simulating [1157.]</li>
+<li>Bug when plotting short vectors [1303].</li>
+<li>Completely refactored the ERT Gui event system [1158, 1162].</li>
+<li>Marked keywords INIT_SECTION and SCHEDULE_FILE as deprecated [1181].</li>
+<li>Removed outdated keywords from documentation [1390].</li>
+<li>Documented UMASK keyword [1186].</li>
+<li>ConfigParser: Can turn off validation + warnings [1233, 1249, 1287].</li>
+<li>Make ies advanced option only [1401].</li>
+<li>Removing MAX_RUNNING_LOCAL and MAX_RUNNING_LSF from user doc [1398].</li>
+<li>Apply plot style to other plots [1397].</li>
+<li>Fig bug in initialization when out of range [1394].</li>
+<li>Added new object for generic config settings [1391].</li>
+<li>Changes to plot settings [11359,376,1380,1382,1386].</li>
+<li>Fix bug in load case manually [1368].</li>
+<li>Documentation of plugins [1194].</li>
+<li>Changed all time handling to UTC. This will affect loading old cases [1229, 1257].</li>
+<li>Removed keyword QC_PATH + updated GRID [1263].</li>
+<li>Making sure the ertshell is creating the run path [1280].</li>
+<li>Create Doxygen [1277,1278,1294,1309,1317].</li>
+<li>Ability to run analysis from GUI [1314].</li>
+<li>Improved documentation of priors [1319].</li>
+<li>Bug in config parsing with relative paths [1333].</li>
+<li>Field documentation updates [1337].</li>
+</ul>
+</div></blockquote>
+<p>libwecl_well:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Internalize rates for wells and connections in the well library
+[1403].</li>
+<li>New function well_ts_get_name() [1393].</li>
+</ul>
+</div></blockquote>
+<p>libutil:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Functions for parsing and outputting dates in ISO format[1248].</li>
+<li>stringlist_join - like Python str.join [1243].</li>
+<li>bug in matrix_dgemm [1286].</li>
+<li>Resurrected block_fs utilities from the past [1297].</li>
+<li>Slicing for runpath_list [1356].</li>
+</ul>
+</div></blockquote>
 </div>
 </div>
 
