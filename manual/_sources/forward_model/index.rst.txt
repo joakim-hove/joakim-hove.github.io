@@ -8,6 +8,17 @@ The forward model
 Default jobs
 ~~~~~~~~~~~~
 
+Reservoir simulation: eclipse
+.............................
+
+Reservoir modelling: RMS
+........................
+
+File system utilities
+.....................
+
+
+
 Configuring your own jobs
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 

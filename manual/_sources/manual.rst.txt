@@ -16,7 +16,8 @@ Welcome to ERT's documentation!
    workflows/index
    update/index
    scripting/index   
-
+   keywords/index
+   changes/index
 
           
 
