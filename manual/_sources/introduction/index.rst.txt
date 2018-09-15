@@ -37,11 +37,52 @@ happened already anyway!
 Embrace the uncertainty
 -----------------------
 
-Kalman filter
--------------
-
 Ensemble Kalman Filter - EnKF
 -----------------------------
+
+The ERT application was originally devised created to do model updating of
+reservoir models with the EnKF algorithm. The experience from real world models
+was that EnKF was not very suitable for reservoir applications, and ERT has
+since changed to the Ensemble Smoother (ES) which can be said to be a simplified
+version of the EnKF. But the characteristics of the EnKF algorithm still
+influence many of the design decisions in ERT, it therefor makes sense to give a
+short introduction to the Kalman Filter and EnKF.
+
+The Kalman Filter
+~~~~~~~~~~~~~~~~~
+
+The Kalman FIlter originates in electronics the 60's. The Kalman filter is
+*widely* used, especially in applications where positioning is the goal - e.g.
+the GPS system. The typical ingredients where the Kalman filter can be
+interesting to try include:
+
+1. We want to determine the final *state* of the system - this can typically the
+   the position.
+
+2. The starting position is uncertain.
+
+3. There is an *equation of motion* - or *forward model* - which describes how
+   the system evolves in time.
+
+4. At fixed point in time we can *observe* the system, these observations are
+   uncertain.
+
+The gist of the Kalman Filter is to combine the predictions from the forward
+model and the observations to get an updated state estimate with minimal
+uncertainty.
+
+
+.. figure:: images/apollo.jpg
+   :scale: 100%
+
+   The engineers at NASA used the Kalman Filter when designing the navigation
+   systems for the Apollo space program. 
+
+
+   
+   
+   
+    
 
 Ensemble Smoother - ES
 ----------------------

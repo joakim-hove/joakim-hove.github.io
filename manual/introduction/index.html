@@ -45,8 +45,10 @@
   <ul>
 <li><a class="reference internal" href="#">Introduction to ERT and Ensemble based methods</a><ul>
 <li><a class="reference internal" href="#embrace-the-uncertainty">Embrace the uncertainty</a></li>
-<li><a class="reference internal" href="#kalman-filter">Kalman filter</a></li>
-<li><a class="reference internal" href="#ensemble-kalman-filter-enkf">Ensemble Kalman Filter - EnKF</a></li>
+<li><a class="reference internal" href="#ensemble-kalman-filter-enkf">Ensemble Kalman Filter - EnKF</a><ul>
+<li><a class="reference internal" href="#the-kalman-filter">The Kalman Filter</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#ensemble-smoother-es">Ensemble Smoother - ES</a></li>
 </ul>
 </li>
@@ -118,11 +120,39 @@ happened already anyway!</p>
 <div class="section" id="embrace-the-uncertainty">
 <h2>Embrace the uncertainty<a class="headerlink" href="#embrace-the-uncertainty" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="kalman-filter">
-<h2>Kalman filter<a class="headerlink" href="#kalman-filter" title="Permalink to this headline">¶</a></h2>
-</div>
 <div class="section" id="ensemble-kalman-filter-enkf">
 <h2>Ensemble Kalman Filter - EnKF<a class="headerlink" href="#ensemble-kalman-filter-enkf" title="Permalink to this headline">¶</a></h2>
+<p>The ERT application was originally devised created to do model updating of
+reservoir models with the EnKF algorithm. The experience from real world models
+was that EnKF was not very suitable for reservoir applications, and ERT has
+since changed to the Ensemble Smoother (ES) which can be said to be a simplified
+version of the EnKF. But the characteristics of the EnKF algorithm still
+influence many of the design decisions in ERT, it therefor makes sense to give a
+short introduction to the Kalman Filter and EnKF.</p>
+<div class="section" id="the-kalman-filter">
+<h3>The Kalman Filter<a class="headerlink" href="#the-kalman-filter" title="Permalink to this headline">¶</a></h3>
+<p>The Kalman FIlter originates in electronics the 60’s. The Kalman filter is
+<em>widely</em> used, especially in applications where positioning is the goal - e.g.
+the GPS system. The typical ingredients where the Kalman filter can be
+interesting to try include:</p>
+<ol class="arabic simple">
+<li>We want to determine the final <em>state</em> of the system - this can typically the
+the position.</li>
+<li>The starting position is uncertain.</li>
+<li>There is an <em>equation of motion</em> - or <em>forward model</em> - which describes how
+the system evolves in time.</li>
+<li>At fixed point in time we can <em>observe</em> the system, these observations are
+uncertain.</li>
+</ol>
+<p>The gist of the Kalman Filter is to combine the predictions from the forward
+model and the observations to get an updated state estimate with minimal
+uncertainty.</p>
+<div class="figure" id="id1">
+<a class="reference internal image-reference" href="../_images/apollo.jpg"><img alt="../_images/apollo.jpg" src="../_images/apollo.jpg" style="width: 2797.0px; height: 4038.0px;" /></a>
+<p class="caption"><span class="caption-text">The engineers at NASA used the Kalman Filter when designing the navigation
+systems for the Apollo space program.</span></p>
+</div>
+</div>
 </div>
 <div class="section" id="ensemble-smoother-es">
 <h2>Ensemble Smoother - ES<a class="headerlink" href="#ensemble-smoother-es" title="Permalink to this headline">¶</a></h2>
