@@ -20,17 +20,17 @@ Misc:
 
  - Using res_config changes from libres `[16] <https://github.com/Statoil/ert/pull/16/>`_
  - files moved from libecl to libres: `[51] <http://github.com/Statoil/ert/pull/51>`_
- - replaced ert.enkf with res.enkf `[56] <http://github.com/Statoil/ert/pull/56/`_
+ - replaced ert.enkf with res.enkf `[56] <http://github.com/Statoil/ert/pull/56/>`_
  - Created ErtVersion: [`61 <http://github.com/Statoil/ert/pull/61/>`_, `66 <http://github.com/Statoil/ert/pull/66/>`_].
  - Using res_config: [`62 <http://github.com/Statoil/ert/pull/62/>`_]
  - Removed dead workflow files: `[64] <http://github.com/Statoil/ert/pull/64/>`_
 
 Build and testing:
 
- - Cleanup after repo split [`1 <http://github.com/Statoil/ert/pull/1/>`_, `2 <http://github.com/Statoil/ert/pull/2/>`_, `3 <http://github.com/Statoil/ert/pull/3/>`_ , `4 <http://github.com/Statoil/ert/pull/4/>`_, `5 <http://github.com/Statoil/ert/pull/5/>`_ , ``6 <http://github.com/Statoil/ert/pull/6/>`_ <http://github.com/Statoil/ert/pull/6/>`_]
+ - Cleanup after repo split [`1 <http://github.com/Statoil/ert/pull/1/>`_, `2 <http://github.com/Statoil/ert/pull/2/>`_, `3 <http://github.com/Statoil/ert/pull/3/>`_ , `4 <http://github.com/Statoil/ert/pull/4/>`_, `5 <http://github.com/Statoil/ert/pull/5/>`_ , `6 <http://github.com/Statoil/ert/pull/6/>`_,  `<http://github.com/Statoil/ert/pull/6/>`_]
  - Added test_install functionality [`7 <http://github.com/Statoil/ert/pull/7/>`_]
  - Added travis build script for libecl+libres+ert:
-   [`15 <http://github.com/Statoil/ert/pull/15/>`_, `17 <http://github.com/Statoil/ert/pull/17/>`_, `18 <http://github.com/Statoil/ert/pull/18/>`_, `19 <http://github.com/Statoil/ert/pull/19/>`_, `21 <http://github.com/Statoil/ert/pull/21/>`_, `26 <http://github.com/Statoil/ert/pull/26/>`_, `27 <http://github.com/Statoil/ert/pull/27/>`_, 39, 52-55, 63
+   [`15 <http://github.com/Statoil/ert/pull/15/>`_, `17 <http://github.com/Statoil/ert/pull/17/>`_, `18 <http://github.com/Statoil/ert/pull/18/>`_, `19 <http://github.com/Statoil/ert/pull/19/>`_, `21 <http://github.com/Statoil/ert/pull/21/>`_, `26 <http://github.com/Statoil/ert/pull/26/>`_, `27 <http://github.com/Statoil/ert/pull/27/>`_, `39, <http://github.com/Statoil/ert/pull/39/>`_ `52 <http://github.com/Statoil/ert/pull/52/>`_-`55 <http://github.com/Statoil/ert/pull/55/>`_, `63 <http://github.com/Statoil/ert/pull/63/>`_
 
  - MacOS build error: [28].
  - Created simple gui_test bin/gui_test [32]
