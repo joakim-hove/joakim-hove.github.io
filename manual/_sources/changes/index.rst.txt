@@ -18,7 +18,7 @@ Cherry-picked: 70
 
 Misc:
 
- - Using res_config changes from libres `[16] <https://github.com/Statoil/ert/pulls/16/>`_
+ - Using res_config changes from libres `[16] <https://github.com/Statoil/ert/pull/16/>`_
  - files moved from libecl to libres: [51].
  - replaced ert.enkf with res.enkf [56]
  - Created ErtVersion: [61, 66].
