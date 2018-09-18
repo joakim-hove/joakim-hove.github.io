@@ -94,11 +94,16 @@ The purpose of the Kalman Filter is to determine an updated :math:`x_k` from
 and uncertainty are:
 
 .. math::
-   x_k &= x_k^{\ast}\frac{\sigma_d^2}{\sigma_k^2 + \sigma_d^2} + x_d
+
+   x_k = x_k^{\ast}\frac{\sigma_d^2}{\sigma_k^2 + \sigma_d^2} + x_d
    \frac{\sigma_k^2}{\sigma_k^2 + \sigma_d^2}
 
 .. math::          
-   \sigma_k &= 1092
+
+   \sigma_k^2 = \sigma_k^2\left(1 - \frac{\sigma_k^{2\ast}}{\sigma_d^2 + \sigma_k^{2\ast}}\right)
+
+
+   
 
 
 Looking 
