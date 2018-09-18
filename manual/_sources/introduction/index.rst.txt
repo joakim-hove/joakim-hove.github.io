@@ -100,19 +100,22 @@ and uncertainty are:
 
 .. math::          
 
-   \sigma_k^2 = \sigma_k^2\left(1 - \frac{\sigma_k^{2\ast}}{\sigma_d^2 + \sigma_k^{2\ast}}\right)
+   \sigma_k^2 = \sigma_k^i{2\ast}\left(1 - \frac{\sigma_k^{2\ast}}{\sigma_d^2 + \sigma_k^{2\ast}}\right)
 
 
-   
-
-
-Looking 
+Looking at the equation for the position update we see that the analyyzed
+position :math:`x_k` is a weighted sum over the forecasted positon
+:math:`x_k^{\ast}` and measured position :math:`d_k` - where the weighting
+depends on the relative weight of the uncertainties :math:`sigma_k^{\ast}` and
+:math:`\sigma_d`. For the updated uncertainty the key take away message is that
+the updated uncertainty will always be smaller than the forecasted uncertainty:
+:math:`\sigma_k < \sigma_k^{\ast}`.
 
 .. figure:: images/apollo.jpg
    :scale: 20%
-
-   The engineers at NASA used the Kalman Filter when designing the navigation
-   systems for the Apollo space program. 
+           
+The engineers at NASA used the Kalman Filter when designing the navigation
+systems for the Apollo space program. 
 
 
 Using an ensemble to estimate the uncertainty: EnKF

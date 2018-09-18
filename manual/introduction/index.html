@@ -174,13 +174,19 @@ and uncertainty are:</p>
 \[x_k = x_k^{\ast}\frac{\sigma_d^2}{\sigma_k^2 + \sigma_d^2} + x_d
 \frac{\sigma_k^2}{\sigma_k^2 + \sigma_d^2}\]</div>
 <div class="math notranslate">
-\[\sigma_k^2 = \sigma_k^2\left(1 - \frac{\sigma_k^{2\ast}}{\sigma_d^2 + \sigma_k^{2\ast}}\right)\]</div>
-<p>Looking</p>
-<div class="figure" id="id1">
+\[\sigma_k^2 = \sigma_k^i{2\ast}\left(1 - \frac{\sigma_k^{2\ast}}{\sigma_d^2 + \sigma_k^{2\ast}}\right)\]</div>
+<p>Looking at the equation for the position update we see that the analyyzed
+position <span class="math notranslate">\(x_k\)</span> is a weighted sum over the forecasted positon
+<span class="math notranslate">\(x_k^{\ast}\)</span> and measured position <span class="math notranslate">\(d_k\)</span> - where the weighting
+depends on the relative weight of the uncertainties <span class="math notranslate">\(sigma_k^{\ast}\)</span> and
+<span class="math notranslate">\(\sigma_d\)</span>. For the updated uncertainty the key take away message is that
+the updated uncertainty will always be smaller than the forecasted uncertainty:
+<span class="math notranslate">\(\sigma_k &lt; \sigma_k^{\ast}\)</span>.</p>
+<div class="figure">
 <a class="reference internal image-reference" href="../_images/apollo.jpg"><img alt="../_images/apollo.jpg" src="../_images/apollo.jpg" style="width: 559.4px; height: 807.6px;" /></a>
-<p class="caption"><span class="caption-text">The engineers at NASA used the Kalman Filter when designing the navigation
-systems for the Apollo space program.</span></p>
 </div>
+<p>The engineers at NASA used the Kalman Filter when designing the navigation
+systems for the Apollo space program.</p>
 </div>
 <div class="section" id="using-an-ensemble-to-estimate-the-uncertainty-enkf">
 <h3>Using an ensemble to estimate the uncertainty: EnKF<a class="headerlink" href="#using-an-ensemble-to-estimate-the-uncertainty-enkf" title="Permalink to this headline">¶</a></h3>
