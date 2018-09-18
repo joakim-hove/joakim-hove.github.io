@@ -67,23 +67,58 @@ interesting to try include:
 4. At fixed point in time we can *observe* the system, these observations are
    uncertain.
 
-The gist of the Kalman Filter is to combine the predictions from the forward
-model and the observations to get an updated state estimate with minimal
-uncertainty.
+As a very simple application of the Kalman Filter, assume that we wish to
+estimate the position of a boat as :math:`x(t)`; we know where the boat starts
+(initial condition), we have an equation for how the boat moves with time and at
+selected points in time :math:`t_k` we get *measurements* of the position. The
+quantities of interest are:
 
+:math:`x_k`
+   The estimated position at time :math:`t_k`.
+
+:math:`\sigma_k`
+   The uncertainty in the position at time :math:`t_k`.
+
+:math:`x_k^{\ast}`
+   The *estimated/forecasted* position at time :math:`t_k` -
+   this is the position estimated from :math:`x_{k-1}` and :math:`f(x,t)`, but
+   before the observed data :math:`d_k` is taken into account.
+
+:math:`f(x,t)`
+   The equation of motion - *forward model* - which propagates
+      :math:`x_{k-1} \to x_k^{\ast}` 
+
+The purpose of the Kalman Filter is to determine an updated :math:`x_k` from
+:math:`x_{k-1}` and :math:`d_k`. The updated :math:`x_k` is the value which
+*minimizes the variance* :math:`\sigma_k`. The equations for updated position
+and uncertainty are:
+
+.. math::
+   x_k &= x_k^{\ast}\frac{\sigma_d^2}{\sigma_k^2 + \sigma_d^2} + x_d
+   \frac{\sigma_k^2}{\sigma_k^2 + \sigma_d^2}
+
+.. math::          
+   \sigma_k &= 1092
+
+
+Looking 
 
 .. figure:: images/apollo.jpg
-   :scale: 100%
+   :scale: 20%
 
    The engineers at NASA used the Kalman Filter when designing the navigation
    systems for the Apollo space program. 
 
 
-   
-   
+Using an ensemble to estimate the uncertainty: EnKF
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+ 
    
     
 
 Ensemble Smoother - ES
 ----------------------
+
+
 

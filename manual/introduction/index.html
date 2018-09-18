@@ -47,6 +47,7 @@
 <li><a class="reference internal" href="#embrace-the-uncertainty">Embrace the uncertainty</a></li>
 <li><a class="reference internal" href="#ensemble-kalman-filter-enkf">Ensemble Kalman Filter - EnKF</a><ul>
 <li><a class="reference internal" href="#the-kalman-filter">The Kalman Filter</a></li>
+<li><a class="reference internal" href="#using-an-ensemble-to-estimate-the-uncertainty-enkf">Using an ensemble to estimate the uncertainty: EnKF</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#ensemble-smoother-es">Ensemble Smoother - ES</a></li>
@@ -144,14 +145,45 @@ the system evolves in time.</li>
 <li>At fixed point in time we can <em>observe</em> the system, these observations are
 uncertain.</li>
 </ol>
-<p>The gist of the Kalman Filter is to combine the predictions from the forward
-model and the observations to get an updated state estimate with minimal
-uncertainty.</p>
+<p>As a very simple application of the Kalman Filter, assume that we wish to
+estimate the position of a boat as <span class="math notranslate">\(x(t)\)</span>; we know where the boat starts
+(initial condition), we have an equation for how the boat moves with time and at
+selected points in time <span class="math notranslate">\(t_k\)</span> we get <em>measurements</em> of the position. The
+quantities of interest are:</p>
+<dl class="docutils">
+<dt><span class="math notranslate">\(x_k\)</span></dt>
+<dd>The estimated position at time <span class="math notranslate">\(t_k\)</span>.</dd>
+<dt><span class="math notranslate">\(\sigma_k\)</span></dt>
+<dd>The uncertainty in the position at time <span class="math notranslate">\(t_k\)</span>.</dd>
+<dt><span class="math notranslate">\(x_k^{\ast}\)</span></dt>
+<dd>The <em>estimated/forecasted</em> position at time <span class="math notranslate">\(t_k\)</span> -
+this is the position estimated from <span class="math notranslate">\(x_{k-1}\)</span> and <span class="math notranslate">\(f(x,t)\)</span>, but
+before the observed data <span class="math notranslate">\(d_k\)</span> is taken into account.</dd>
+<dt><span class="math notranslate">\(f(x,t)\)</span></dt>
+<dd><dl class="first last docutils">
+<dt>The equation of motion - <em>forward model</em> - which propagates</dt>
+<dd><span class="math notranslate">\(x_{k-1} \to x_k^{\ast}\)</span></dd>
+</dl>
+</dd>
+</dl>
+<p>The purpose of the Kalman Filter is to determine an updated <span class="math notranslate">\(x_k\)</span> from
+<span class="math notranslate">\(x_{k-1}\)</span> and <span class="math notranslate">\(d_k\)</span>. The updated <span class="math notranslate">\(x_k\)</span> is the value which
+<em>minimizes the variance</em> <span class="math notranslate">\(\sigma_k\)</span>. The equations for updated position
+and uncertainty are:</p>
+<div class="math notranslate">
+\[x_k &amp;= x_k^{\ast}\frac{\sigma_d^2}{\sigma_k^2 + \sigma_d^2} + x_d
+\frac{\sigma_k^2}{\sigma_k^2 + \sigma_d^2}\]</div>
+<div class="math notranslate">
+\[\sigma_k &amp;= 1092\]</div>
+<p>Looking</p>
 <div class="figure" id="id1">
-<a class="reference internal image-reference" href="../_images/apollo.jpg"><img alt="../_images/apollo.jpg" src="../_images/apollo.jpg" style="width: 2797.0px; height: 4038.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/apollo.jpg"><img alt="../_images/apollo.jpg" src="../_images/apollo.jpg" style="width: 559.4px; height: 807.6px;" /></a>
 <p class="caption"><span class="caption-text">The engineers at NASA used the Kalman Filter when designing the navigation
 systems for the Apollo space program.</span></p>
 </div>
+</div>
+<div class="section" id="using-an-ensemble-to-estimate-the-uncertainty-enkf">
+<h3>Using an ensemble to estimate the uncertainty: EnKF<a class="headerlink" href="#using-an-ensemble-to-estimate-the-uncertainty-enkf" title="Permalink to this headline">¶</a></h3>
 </div>
 </div>
 <div class="section" id="ensemble-smoother-es">
