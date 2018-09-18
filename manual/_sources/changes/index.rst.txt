@@ -27,21 +27,21 @@ Misc:
 
 Build and testing:
 
- - Cleanup after repo split [`1 <http://github.com/Statoil/ert/pull/1/>`_, `2 <http://github.com/Statoil/ert/pull/2/>`_, `3 <http://github.com/Statoil/ert/pull/3/>`_ , `4 <http://github.com/Statoil/ert/pull/4/>`_, `5 <http://github.com/Statoil/ert/pull/5/>`_ , `6 <http://github.com/Statoil/ert/pull/6/>`_,  `<http://github.com/Statoil/ert/pull/6/>`_]
+ - Cleanup after repo split [`1 <http://github.com/Statoil/ert/pull/1/>`_, `2 <http://github.com/Statoil/ert/pull/2/>`_, `3 <http://github.com/Statoil/ert/pull/3/>`_ , `4 <http://github.com/Statoil/ert/pull/4/>`_, `5 <http://github.com/Statoil/ert/pull/5/>`_ , `6 <http://github.com/Statoil/ert/pull/6/>`_]
  - Added test_install functionality [`7 <http://github.com/Statoil/ert/pull/7/>`_]
  - Added travis build script for libecl+libres+ert:
-   [`15 <http://github.com/Statoil/ert/pull/15/>`_, `17 <http://github.com/Statoil/ert/pull/17/>`_, `18 <http://github.com/Statoil/ert/pull/18/>`_, `19 <http://github.com/Statoil/ert/pull/19/>`_, `21 <http://github.com/Statoil/ert/pull/21/>`_, `26 <http://github.com/Statoil/ert/pull/26/>`_, `27 <http://github.com/Statoil/ert/pull/27/>`_, `39, <http://github.com/Statoil/ert/pull/39/>`_ `52 <http://github.com/Statoil/ert/pull/52/>`_-`55 <http://github.com/Statoil/ert/pull/55/>`_, `63 <http://github.com/Statoil/ert/pull/63/>`_
+   [`15 <http://github.com/Statoil/ert/pull/15/>`_, `17 <http://github.com/Statoil/ert/pull/17/>`_, `18 <http://github.com/Statoil/ert/pull/18/>`_, `19 <http://github.com/Statoil/ert/pull/19/>`_, `21 <http://github.com/Statoil/ert/pull/21/>`_, `26 <http://github.com/Statoil/ert/pull/26/>`_, `27 <http://github.com/Statoil/ert/pull/27/>`_, `39, <http://github.com/Statoil/ert/pull/39/>`_ `52 <http://github.com/Statoil/ert/pull/52/>`_-`55 <http://github.com/Statoil/ert/pull/55/>`_, `63 <http://github.com/Statoil/ert/pull/63/>`_]
 
- - MacOS build error: [28].
- - Created simple gui_test bin/gui_test [32]
- - cmake - create symlink: [41, 42, 43]
- - Initial Python3 testing [58, 60].
+ - MacOS build error: [`28 <http://github.com/Statoil/ert/pull/28/>`_].
+ - Created simple gui_test bin/gui_test [`32 <http://github.com/Statoil/ert/pull/32/>`_]
+ - cmake - create symlink: [`41 <http://github.com/Statoil/ert/pull/41/>`_, `42 <http://github.com/Statoil/ert/pull/42/>`_, `43 <http://github.com/Statoil/ert/pull/43/>`_]
+ - Initial Python3 testing [`58 <http://github.com/Statoil/ert/pull/58/>`_, `60 <http://github.com/Statoil/ert/pull/60/>`_].
 
 
 Queue and running:
 
- - Added base run model - gui model updates: [20].
- - Added single simulation pretest running [33, 36, 50, 67].
+ - Added base run model - gui model updates: [`20 <http://github.com/Statoil/ert/pull/20/>`_].
+ - Added single simulation pretest running [`33 <http://github.com/Statoil/ert/pull/33/>`_, `36 <http://github.com/Statoil/ert/pull/36/>`_, `50 <http://github.com/Statoil/ert/pull/50/>`_, `67 <http://github.com/Statoil/ert/pull/67/>`_].
  - Add run_id to simulation batches.
 
 
