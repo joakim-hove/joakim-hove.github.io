@@ -1,0 +1,558 @@
+
+
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Configuring observations for ERT &#8212; ERT 2.3 documentation</title>
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="The smoother update in ERT" href="../update/index.html" />
+    <link rel="prev" title="Workflows" href="../workflows/index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../update/index.html" title="The smoother update in ERT"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../workflows/index.html" title="Workflows"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../manual.html">ERT 2.3 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../manual.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Configuring observations for ERT</a><ul>
+<li><a class="reference internal" href="#general-overview">General overview</a></li>
+<li><a class="reference internal" href="#the-history-observation-keyword">The HISTORY_OBSERVATION keyword</a></li>
+<li><a class="reference internal" href="#the-summary-observation-keyword">The SUMMARY_OBSERVATION keyword</a></li>
+<li><a class="reference internal" href="#the-block-observation-keyword">The BLOCK_OBSERVATION keyword</a></li>
+<li><a class="reference internal" href="#the-general-observation-keyword">The GENERAL_OBSERVATION keyword</a><ul>
+<li><a class="reference internal" href="#matching-gen-obs-and-gen-data">Matching GEN_OBS and GEN_DATA</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../workflows/index.html"
+                        title="previous chapter">Workflows</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../update/index.html"
+                        title="next chapter">The smoother update in ERT</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/observations/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="configuring-observations-for-ert">
+<h1>Configuring observations for ERT<a class="headerlink" href="#configuring-observations-for-ert" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="general-overview">
+<h2>General overview<a class="headerlink" href="#general-overview" title="Permalink to this headline">¶</a></h2>
+<p>When using ERT to condition on dynamic data, it is necessary to
+specify which data to condition on. In particular, for a given piece
+of data to condition on, the ERT  application needs to know:</p>
+<blockquote>
+<div><ul class="simple">
+<li>The actual measured value of the data.</li>
+<li>The uncertainty of the measured data.</li>
+<li>The time of measurement.</li>
+<li>How to simulate a response of the data given a parametrized ECLIPSE model.</li>
+</ul>
+</div></blockquote>
+<p>To provide this observation to ERT, an observation file must be
+created. The observation file is a plain text file, and is in essence
+built around for different classes of observations and has an
+associated keyword for each class:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Well or group rates from an existing ECLIPSE reference case: The
+HISTORY_OBSERVATION keyword.</li>
+<li>Well logs, RFTS and PLTs: The BLOCK_OBSERVATION keyword.</li>
+<li>Separator tests, region pressures, etc.: The SUMMARY_OBSERVATION
+keyword.</li>
+<li>Exotic observations (e.g. data from 4D seismic): The
+GENERAL_OBSERVATION keyword.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="the-history-observation-keyword">
+<h2>The HISTORY_OBSERVATION keyword<a class="headerlink" href="#the-history-observation-keyword" title="Permalink to this headline">¶</a></h2>
+<p>The keyword HISTORY_OBSERVATION is used to condition on observations
+from the WCONHIST and WCONINJH keywords in schedule file provided to
+the enkf project (or alternatively an ECLIPSE summary file if you have
+changed the HISTORY_SOURCE keyword in the enkf project). The keyword
+is typically used to condition on production and injection rates for
+groups and wells, as well as bottom hole and tubing head pressures. An
+observation entered with the HISTORY_OBSERVATION keyword will be
+active at all report steps where data for the observation can be
+found.</p>
+<p>In it’s simplest form, a history observation is created as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">HISTORY_OBSERVATION</span> <span class="n">WOPR</span><span class="p">:</span><span class="n">P1</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>This will condition on WOPR in well P1 using a default observation
+error. The default observation error is a relative error of 10% to the
+measurement with a minimum error of 0.10. See below on how explicitly
+set the error.</p>
+<p>In general, to condition on variable VAR in well or group WGNAME, one
+uses:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">HISTORY_OBSERVATION</span> <span class="n">VAR</span><span class="p">:</span><span class="n">WGNAME</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Note that there must be a colon “:” between VAR and WGNAME and that
+the statement shall end with a semi-colon “;”. Thus, to condition on
+WOPR, WWCT and WGOR in well C-17, and for the GOPR for the whole
+field, one would add the following to the observation configuration:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">HISTORY_OBSERVATION</span> <span class="n">WOPR</span><span class="p">:</span><span class="n">C</span><span class="o">-</span><span class="mi">17</span><span class="p">;</span>
+<span class="n">HISTORY_OBSERVATION</span> <span class="n">WWCT</span><span class="p">:</span><span class="n">C</span><span class="o">-</span><span class="mi">17</span><span class="p">;</span>
+<span class="n">HISTORY_OBSERVATION</span> <span class="n">WGOR</span><span class="p">:</span><span class="n">C</span><span class="o">-</span><span class="mi">17</span><span class="p">;</span>
+
+<span class="n">HISTORY_OBSERVATION</span> <span class="n">GOPR</span><span class="p">:</span><span class="n">FIELD</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>By default, the observation error is set to 10% of the observed value,
+with a minimum of 0.10. It can be changed as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">HISTORY_OBSERVATION</span> <span class="n">GOPR</span><span class="p">:</span><span class="n">FIELD</span>
+<span class="p">{</span>
+   <span class="n">ERROR</span>       <span class="o">=</span> <span class="mi">1000</span><span class="p">;</span>
+   <span class="n">ERROR_MODE</span>  <span class="o">=</span> <span class="n">ABS</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>This will set the observation error to 1000 for all observations of
+GOPR:FIELD. Note that both the items ERROR and ERROR_MODE as well as
+the whole definition shall end with a semi-colon.</p>
+<p>The item ERROR_MODE can take three different values: ABS, REL or
+RELMIN. If set to REL, all observation errors will be set to the
+observed values multiplied by ERROR. Thus, the following will
+condition on water injection rate for the whole field with 20%
+observation uncertainity:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">HISTORY_OBSERVATION</span> <span class="n">GWIR</span><span class="p">:</span><span class="n">FIELD</span>
+<span class="p">{</span>
+   <span class="n">ERROR</span>       <span class="o">=</span> <span class="mf">0.20</span><span class="p">;</span>
+   <span class="n">ERROR_MODE</span>  <span class="o">=</span> <span class="n">REL</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>If you do not want the observation error to drop below a given
+threshold, say 100, you can use RELMIN and the keyword ERROR_MIN:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">HISTORY_OBSERVATION</span> <span class="n">GWIR</span><span class="p">:</span><span class="n">FIELD</span>
+<span class="p">{</span>
+   <span class="n">ERROR</span>       <span class="o">=</span> <span class="mf">0.20</span><span class="p">;</span>
+   <span class="n">ERROR_MODE</span>  <span class="o">=</span> <span class="n">RELMIN</span><span class="p">;</span>
+   <span class="n">ERROR_MIN</span>   <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>Note that the configuration parser does not threat carriage return
+different from space. Thus, the following statement is equivalent to
+the previous:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">HISTORY_OBSERVATION</span> <span class="n">GWIR</span><span class="p">:</span><span class="n">FIELD</span> <span class="p">{</span> <span class="n">ERROR</span> <span class="o">=</span> <span class="mf">0.20</span><span class="p">;</span> <span class="n">ERROR_MODE</span> <span class="o">=</span> <span class="n">RELMIN</span><span class="p">;</span> <span class="n">ERROR_MIN</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span> <span class="p">};</span>
+</pre></div>
+</div>
+<p>Also note that the special keyword include can be used to read an
+external file. This can be very useful if you want to change the
+standard configuration for a lot of observations in one go. For
+example, consider the following code:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">HISTORY_OBSERVATION</span> <span class="n">WOPR</span><span class="p">:</span><span class="n">P1</span> <span class="p">{</span> <span class="n">include</span> <span class="s2">&quot;hist_obs_wells.txt&quot;</span><span class="p">;</span> <span class="p">};</span>
+<span class="n">HISTORY_OBSERVATION</span> <span class="n">WOPR</span><span class="p">:</span><span class="n">P2</span> <span class="p">{</span> <span class="n">include</span> <span class="s2">&quot;hist_obs_wells.txt&quot;</span><span class="p">;</span> <span class="p">};</span>
+<span class="n">HISTORY_OBSERVATION</span> <span class="n">WOPR</span><span class="p">:</span><span class="n">P3</span> <span class="p">{</span> <span class="n">include</span> <span class="s2">&quot;hist_obs_wells.txt&quot;</span><span class="p">;</span> <span class="p">};</span>
+<span class="n">HISTORY_OBSERVATION</span> <span class="n">WOPR</span><span class="p">:</span><span class="n">P4</span> <span class="p">{</span> <span class="n">include</span> <span class="s2">&quot;hist_obs_wells.txt&quot;</span><span class="p">;</span> <span class="p">};</span>
+<span class="n">HISTORY_OBSERVATION</span> <span class="n">WOPR</span><span class="p">:</span><span class="n">P5</span> <span class="p">{</span> <span class="n">include</span> <span class="s2">&quot;hist_obs_wells.txt&quot;</span><span class="p">;</span> <span class="p">};</span>
+</pre></div>
+</div>
+<p>Where the contents of the file hist_obs_wells.txt may be something
+like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ERROR_MODE</span>  <span class="o">=</span> <span class="n">RELMIN</span><span class="p">;</span>
+<span class="n">ERROR</span>       <span class="o">=</span> <span class="mf">0.25</span><span class="p">;</span>
+<span class="n">ERROR_MIN</span>   <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>In this case, changing the file hist_obs_wells.txt will affect all of
+the observations.</p>
+<p>Note that the keyword include can be used anywhere in the
+configuration file. However, nested inclusion (use of include in a
+file that has already been included with include) is not allowed.</p>
+<p>By default, an observation entered with the HISTORY_OBSERVATION
+keyword will get the observed values, i.e. the ‘true’ values, from the
+WCONHIST and WCONINJH keywords in the schedule file provided to the
+ERT project. However it also possible to get the observed values from
+a reference case. In that case you must set set HISTORY_SOURCE
+variable in the ERT configuration file, see Creating a configuration
+file for ERT.</p>
+<p>To change the observation error for a HISTORY_OBSERVATION for one or
+more segments of the historic period, you can use the SEGMENT
+keyword. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">HISTORY_OBSERVATION</span> <span class="n">GWIR</span><span class="p">:</span><span class="n">FIELD</span>
+<span class="p">{</span>
+   <span class="n">ERROR</span>       <span class="o">=</span> <span class="mf">0.20</span><span class="p">;</span>
+   <span class="n">ERROR_MODE</span>  <span class="o">=</span> <span class="n">RELMIN</span><span class="p">;</span>
+   <span class="n">ERROR_MIN</span>   <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+
+   <span class="n">SEGMENT</span> <span class="n">FIRST_YEAR</span>
+   <span class="p">{</span>
+      <span class="n">START</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+      <span class="n">STOP</span>  <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+      <span class="n">ERROR</span> <span class="o">=</span> <span class="mf">0.50</span><span class="p">;</span>
+      <span class="n">ERROR_MODE</span> <span class="o">=</span> <span class="n">REL</span><span class="p">;</span>
+   <span class="p">};</span>
+
+   <span class="n">SEGMENT</span> <span class="n">SECOND_YEAR</span>
+   <span class="p">{</span>
+      <span class="n">START</span>      <span class="o">=</span> <span class="mi">11</span><span class="p">;</span>
+      <span class="n">STOP</span>       <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+      <span class="n">ERRROR</span>     <span class="o">=</span> <span class="mi">1000</span><span class="p">;</span>
+      <span class="n">ERROR_MODE</span> <span class="o">=</span> <span class="n">ABS</span><span class="p">;</span>
+   <span class="p">};</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>The items START and STOP sets the start and stop of the segment in
+terms of ECLIPSE restart steps. The keywords ERROR, ERROR_MODE and
+ERROR_MIN behaves like before. If the segments overlap, they are
+computed in alphabetical order.  Error covariance for “merged” updates</p>
+<p>When merging the historical observations from several report steps
+together in one update the different steps are not independent, and it
+is beneficial to use a error covariance matrix, by using the keywords
+AUTO_CORRF and AUTO_CORRF_PARAM ERT will automatically estimate a
+error-covariance matrix based on the auto correlation function
+specified by the AUTO_CORRF keyword, with the parameter given by the
+AUTO_CORRF_PARAM parameter (i.e. the auto correlation length). The
+currently available auto correlation functions are:</p>
+<blockquote>
+<div>EXP   ~ exp(-x)
+GAUSS ~ exp(-x*x/2)</div></blockquote>
+<p>where the parameter x is given as:</p>
+<blockquote>
+<div>x = (t2 - t1) / AUTO_CORRF_PARAM</div></blockquote>
+</div>
+<div class="section" id="the-summary-observation-keyword">
+<h2>The SUMMARY_OBSERVATION keyword<a class="headerlink" href="#the-summary-observation-keyword" title="Permalink to this headline">¶</a></h2>
+<p>The keyword SUMMARY_OBSERVATION can be used to condition on any
+observation whos simulated value is written to the ECLIPSE summary
+file, e.g. well rates, region properties, group and field rates etc. A
+quite typical usage of SUMMARY_OBSERVATION is to condition on the
+results of a separator test.</p>
+<p>Note: Although it is possible to condition on well and group rates
+with SUMMARY_OBSERVATION, it is usually easier to use
+HISTORY_OBSERVATION for this.</p>
+<p>In order to create a summary observation, four pieces of information
+are needed: The observed value, the observation error, the time of
+observation and a summary key. A typical summary observation is
+created as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SUMMARY_OBSERVATION</span> <span class="n">SEP_TEST_2005</span>
+<span class="p">{</span>
+   <span class="n">VALUE</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+   <span class="n">ERROR</span> <span class="o">=</span>   <span class="mi">5</span><span class="p">;</span>
+   <span class="n">DATE</span>  <span class="o">=</span> <span class="mi">21</span><span class="o">/</span><span class="mi">08</span><span class="o">/</span><span class="mi">2005</span><span class="p">;</span>
+   <span class="n">KEY</span>   <span class="o">=</span> <span class="n">GOPR</span><span class="p">:</span><span class="n">BRENT</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>This will create an observation of group oil production for the brent
+group on 21th of august 2005. The observed value was 100 with a
+standard deviation of 5. The name SEP_TEST_2005 will be used as a
+label for the observation within the ERT and must be unique.</p>
+<p>Similarly to the name of a HISTORY_OBSERVATION, the item KEY in a
+SUMMARY_OBSERVATION is used to look up the simulated value from the
+summary file. And again, as when declaring a HISTORY_OBSERVATION, to
+condition on VAR in well, group or region WGRNAME, one uses:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">KEY</span> <span class="o">=</span> <span class="n">VAR</span><span class="p">:</span><span class="n">WGRNAME</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>For example, to condition on RPPW in region 8, one uses:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">KEY</span> <span class="o">=</span> <span class="n">RPPW</span><span class="p">:</span><span class="mi">8</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>It is also possible to give the observation time as a restart number
+using the RESTART item or as time in days from simulation start using
+the DAYS item. Here are two examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span> <span class="n">Giving</span> <span class="n">the</span> <span class="n">observation</span> <span class="n">time</span> <span class="ow">in</span> <span class="n">terms</span> <span class="n">of</span> <span class="n">restart</span> <span class="n">number</span><span class="o">.</span>
+<span class="n">SUMMARY_OBSERVATION</span> <span class="n">SEP_TEST_2005</span>
+<span class="p">{</span>
+   <span class="n">VALUE</span>    <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+   <span class="n">ERROR</span>    <span class="o">=</span>   <span class="mi">5</span><span class="p">;</span>
+   <span class="n">RESTART</span>  <span class="o">=</span>  <span class="mi">42</span><span class="p">;</span>
+   <span class="n">KEY</span>      <span class="o">=</span> <span class="n">GOPR</span><span class="p">:</span><span class="n">BRENT</span><span class="p">;</span>
+<span class="p">};</span>
+
+
+<span class="o">--</span> <span class="n">Giving</span> <span class="n">the</span> <span class="n">observation</span> <span class="n">time</span> <span class="ow">in</span> <span class="n">terms</span> <span class="n">of</span> <span class="n">days</span>
+<span class="o">--</span> <span class="kn">from</span> <span class="nn">simulation</span> <span class="n">start</span><span class="o">.</span>
+<span class="n">SUMMARY_OBSERVATION</span> <span class="n">SEP_TEST_2008</span>
+<span class="p">{</span>
+   <span class="n">VALUE</span>    <span class="o">=</span> <span class="mi">213</span><span class="p">;</span>
+   <span class="n">ERROR</span>    <span class="o">=</span>  <span class="mi">10</span><span class="p">;</span>
+   <span class="n">DAYS</span>     <span class="o">=</span> <span class="mi">911</span><span class="p">;</span>
+   <span class="n">KEY</span>      <span class="o">=</span> <span class="n">GOPR</span><span class="p">:</span><span class="n">NESS</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-block-observation-keyword">
+<h2>The BLOCK_OBSERVATION keyword<a class="headerlink" href="#the-block-observation-keyword" title="Permalink to this headline">¶</a></h2>
+<p>This is observations of variables in grid blocks/cells. The
+observations can be of arbitrary ECLIPSE fields like PRESSURE
+(typically for an RFT), PORO or PERM. A block observation is entered
+with the BLOCK_OBSERVATION keyword. Here is an example of a typical
+block observation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">BLOCK_OBSERVATION</span> <span class="n">RFT_2006</span>
+<span class="p">{</span>
+   <span class="n">FIELD</span> <span class="o">=</span> <span class="n">PRESSURE</span><span class="p">;</span>
+   <span class="n">DATE</span>  <span class="o">=</span> <span class="mi">22</span><span class="o">/</span><span class="mi">10</span><span class="o">/</span><span class="mi">2006</span><span class="p">;</span>
+
+   <span class="n">OBS</span> <span class="n">P1</span> <span class="p">{</span> <span class="n">I</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>  <span class="n">J</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>  <span class="n">K</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>   <span class="n">VALUE</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>  <span class="n">ERROR</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span> <span class="p">};</span>
+   <span class="n">OBS</span> <span class="n">P2</span> <span class="p">{</span> <span class="n">I</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>  <span class="n">J</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>  <span class="n">K</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>   <span class="n">VALUE</span> <span class="o">=</span> <span class="mi">101</span><span class="p">;</span>  <span class="n">ERROR</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span> <span class="p">};</span>
+   <span class="n">OBS</span> <span class="n">P3</span> <span class="p">{</span> <span class="n">I</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>  <span class="n">J</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>  <span class="n">K</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>   <span class="n">VALUE</span> <span class="o">=</span> <span class="mi">102</span><span class="p">;</span>  <span class="n">ERROR</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span> <span class="p">};</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>This will condition on observations of the pressure in grid blocks
+(1,1,1), (2,2,1) and (2,3,1) on the 22/10/2006.</p>
+<p>By default the BLOCK_OBSERVATION requires that the specific field
+which has been observed (e.g. PRESSURE in the example above) must have
+been specified in main ERT configuration file using the FIELD keyword,
+and ECLIPSE must be configured to produce a restart file for this
+particular time. Alternatively it is possible to tell ERT to use the
+summary vector as source of the data:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">BLOCK_OBSERVATION</span> <span class="n">RFT_2006</span>
+<span class="p">{</span>
+   <span class="n">FIELD</span> <span class="o">=</span> <span class="n">PRESSURE</span><span class="p">;</span>
+   <span class="n">DATE</span>  <span class="o">=</span> <span class="mi">22</span><span class="o">/</span><span class="mi">10</span><span class="o">/</span><span class="mi">2006</span><span class="p">;</span>
+   <span class="n">SOURCE</span> <span class="o">=</span> <span class="n">SUMMARY</span><span class="p">;</span>
+
+   <span class="n">OBS</span> <span class="n">P1</span> <span class="p">{</span> <span class="n">I</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>  <span class="n">J</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>  <span class="n">K</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>   <span class="n">VALUE</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>  <span class="n">ERROR</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span> <span class="p">};</span>
+   <span class="n">OBS</span> <span class="n">P2</span> <span class="p">{</span> <span class="n">I</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>  <span class="n">J</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>  <span class="n">K</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>   <span class="n">VALUE</span> <span class="o">=</span> <span class="mi">101</span><span class="p">;</span>  <span class="n">ERROR</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span> <span class="p">};</span>
+   <span class="n">OBS</span> <span class="n">P3</span> <span class="p">{</span> <span class="n">I</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>  <span class="n">J</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>  <span class="n">K</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>   <span class="n">VALUE</span> <span class="o">=</span> <span class="mi">102</span><span class="p">;</span>  <span class="n">ERROR</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span> <span class="p">};</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>In this case the data will be loaded from the BPR vectors in the
+summary file.</p>
+<p>Note the use of the sub class OBS to specify the actUal observed
+values, the observation errors and their grid location. Each OBS shall
+have a unique key within the BLOCK_OBSERVATION instance, and is
+required to have the items I, J, K, VALUE and ERROR. These are the
+grid i,j and k indicies for the observation point, the observed value
+and it’s standard deviation.</p>
+<p>As with a SUMMARY_OBSERVATION, the observation time can be given as
+either a date, days since simulation start or restart number. The
+respective keys for setting giving it as date, days or restart number
+are DATE, DAYS and RESTART. Note that each BLOCK_OBSERVATION instance
+must have an unique global name (RFT_2006 in the example above).</p>
+<p>Block observations can often be quite long. Thus, it is often a good
+idea to use the special keyword include in order to store the OBS
+structures in a different file. This is done as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">BLOCK_OBSERVATION</span> <span class="n">RFT_2006</span>
+<span class="p">{</span>
+   <span class="n">FIELD</span>   <span class="o">=</span> <span class="n">PRESSURE</span><span class="p">;</span>
+   <span class="n">RESTART</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+
+   <span class="n">include</span> <span class="s1">&#39;RFT_2006_OBS_DATA.txt&#39;</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>Where the file RFT_2006_OBS_DATA.txt contains the OBS instances:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">OBS</span> <span class="n">P1</span> <span class="p">{</span> <span class="n">I</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>  <span class="n">J</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>  <span class="n">K</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>   <span class="n">VALUE</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>  <span class="n">ERROR</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span> <span class="p">};</span>
+<span class="n">OBS</span> <span class="n">P2</span> <span class="p">{</span> <span class="n">I</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>  <span class="n">J</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>  <span class="n">K</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>   <span class="n">VALUE</span> <span class="o">=</span> <span class="mi">101</span><span class="p">;</span>  <span class="n">ERROR</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span> <span class="p">};</span>
+<span class="n">OBS</span> <span class="n">P3</span> <span class="p">{</span> <span class="n">I</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>  <span class="n">J</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>  <span class="n">K</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>   <span class="n">VALUE</span> <span class="o">=</span> <span class="mi">112</span><span class="p">;</span>  <span class="n">ERROR</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span> <span class="p">};</span>
+<span class="n">OBS</span> <span class="n">P4</span> <span class="p">{</span> <span class="n">I</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>  <span class="n">J</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>  <span class="n">K</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>   <span class="n">VALUE</span> <span class="o">=</span> <span class="mi">122</span><span class="p">;</span>  <span class="n">ERROR</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span> <span class="p">};</span>
+<span class="n">OBS</span> <span class="n">P5</span> <span class="p">{</span> <span class="n">I</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>  <span class="n">J</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>  <span class="n">K</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>   <span class="n">VALUE</span> <span class="o">=</span> <span class="mi">112</span><span class="p">;</span>  <span class="n">ERROR</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span> <span class="p">};</span>
+<span class="n">OBS</span> <span class="n">P6</span> <span class="p">{</span> <span class="n">I</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>  <span class="n">J</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>  <span class="n">K</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>   <span class="n">VALUE</span> <span class="o">=</span> <span class="mi">122</span><span class="p">;</span>  <span class="n">ERROR</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span> <span class="p">};</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-general-observation-keyword">
+<h2>The GENERAL_OBSERVATION keyword<a class="headerlink" href="#the-general-observation-keyword" title="Permalink to this headline">¶</a></h2>
+<p>The GENERAL_OBSERVATION keyword is used together with the GEN_DATA and
+GEN_PARAM type. This pair of observation and data types are typically
+used when you want to update something special which does not fit into
+any of the predefined enkf types. The ERT application just treats
+GENERAL_OBSERVATION (and also GEN_DATA) as a range of number with no
+particular structure, this is very flexible, but of course also a bit
+more complex to use:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">GENERAL_OBSERVATION</span> <span class="n">GEN_OBS1</span><span class="p">{</span>
+   <span class="n">DATA</span>     <span class="o">=</span> <span class="n">SOME_FIELD</span><span class="p">;</span>
+   <span class="n">RESTART</span>  <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+   <span class="n">OBS_FILE</span> <span class="o">=</span> <span class="n">some_file</span><span class="o">.</span><span class="n">txt</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>This example a minimum GENERAL_OBSERVATION. The keyword DATA points to
+the GEN_DATA instance this observation is ‘observing’, RESTART gives
+the report step when this observation is active. OBS_FILE should be
+the name of a file with observation values, and the corresponding
+uncertainties. The file with observations should just be a plain text
+file with numbers in it, observations and corresponding uncertainties
+interleaved. An example of an OBS_FILE:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">1.46</span> <span class="mf">0.26</span>
+<span class="mf">25.0</span> <span class="mf">5.0</span>
+<span class="mf">5.00</span> <span class="mf">1.00</span>
+</pre></div>
+</div>
+<p>This OBS_FILE has three observations: 1.46 +/- 0.26, 25.0 +/- 5.0 and
+5.00 +/- 1.00. In the example above it is assumed that the DATA
+instance we are observing (i.e. comparing with) has the same number of
+elements as the observation, i.e. three in this case. By using the
+keywords INDEX_LIST or INDEX_FILE you can select the elements of the
+GEN_DATA instance you are interested in. Consider for example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">GENERAL_OBSERVATION</span> <span class="n">GEN_OBS1</span><span class="p">{</span>
+   <span class="n">DATA</span>       <span class="o">=</span> <span class="n">SOME_FIELD</span><span class="p">;</span>
+   <span class="n">INDEX_LIST</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">9</span><span class="p">;</span>
+   <span class="n">RESTART</span>    <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+   <span class="n">OBS_FILE</span>   <span class="o">=</span> <span class="n">some_file</span><span class="o">.</span><span class="n">txt</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>Here we use INDEX_LIST to indicate that we are interested in element
+0,3 and 9 of the GEN_DATA instance:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">GEN_DATA</span>                     <span class="n">GEN_OBS1</span>
+<span class="o">========</span>                     <span class="o">===========</span>
+<span class="mf">1.56</span> <span class="o">&lt;---------------------&gt;</span> <span class="mf">1.46</span>  <span class="mf">0.26</span>
+<span class="mf">23.0</span>        <span class="o">/--------------&gt;</span> <span class="mf">25.0</span>   <span class="mf">5.00</span>
+<span class="mf">56.0</span>        <span class="o">|</span>    <span class="o">/---------&gt;</span> <span class="mf">5.00</span>  <span class="mf">1.00</span>
+<span class="mf">27.0</span> <span class="o">&lt;------/</span>    <span class="o">|</span>           <span class="o">===========</span>
+ <span class="mf">0.2</span>             <span class="o">|</span>
+<span class="mf">1.56</span>             <span class="o">|</span>
+<span class="mf">1.78</span>             <span class="o">|</span>
+<span class="mf">6.78</span>             <span class="o">|</span>
+<span class="mf">9.00</span>             <span class="o">|</span>
+<span class="mf">4.50</span> <span class="o">&lt;-----------/</span>
+<span class="o">========</span>
+</pre></div>
+</div>
+<p>In addition to INDEX_LIST it is possible to use INDEX_FILE which
+should just point at an plain text file with indexes (without any ‘,’
+or anything). Finally, if your observation only has one value, you can
+embed it in the config object with VALUE and ERROR.</p>
+<div class="section" id="matching-gen-obs-and-gen-data">
+<h3>Matching GEN_OBS and GEN_DATA<a class="headerlink" href="#matching-gen-obs-and-gen-data" title="Permalink to this headline">¶</a></h3>
+<p>It is important to match up the GEN_OBS observations with the
+corresponding GEN_DATA simulation data correctly. The GEN_DATA result
+files must have an embedded ‘%d’ to indicate the report step in them -
+in the case of smoother based workflows the actual numerical value
+here is not important. To ensure that GEN_OBS and corresponding
+GEN_DATA values match up correctly only the RESTART method is allowed
+for GEN_OBS when specifying the time. So consider a setup like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span> <span class="n">Config</span> <span class="n">file</span><span class="p">:</span>
+<span class="n">GEN_DATA</span> <span class="n">RFT_BH67</span> <span class="n">INPUT_FORMAT</span><span class="p">:</span><span class="n">ASCII</span> <span class="n">RESULT_FILE</span><span class="p">:</span><span class="n">rft_BH67_</span><span class="o">%</span><span class="n">d</span>    <span class="n">REPORT_STEPS</span><span class="p">:</span><span class="mi">20</span>
+<span class="o">...</span>                                                       <span class="o">/|</span>\                <span class="o">/|</span>\
+<span class="o">...</span>                                                        <span class="o">|</span>                  <span class="o">|</span>
+<span class="o">--</span> <span class="n">Observation</span> <span class="n">file</span><span class="p">:</span>                                       <span class="o">|</span>                  <span class="o">|</span>
+<span class="n">GENERAL_OBSERVATION</span> <span class="n">GEN_OBS1</span><span class="p">{</span>                              <span class="o">+------------------/</span>
+   <span class="n">DATA</span>       <span class="o">=</span> <span class="n">RFT_BH67</span><span class="p">;</span>                                  <span class="o">|</span>
+   <span class="n">RESTART</span>    <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>   <span class="o">&lt;------------------------------------/</span>
+   <span class="n">OBS_FILE</span>   <span class="o">=</span> <span class="n">some_file</span><span class="o">.</span><span class="n">txt</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>Here we see that the observation is active at report step 20, and we
+expect the forward model to create a file rft_BH67_20 in each
+realization directory.  Error covariance</p>
+<p>The optional keyword ERROR_COVAR can be used to point to an existing
+file, containing an error covariance matrix. The file should contain
+the elements of the matrix as formatted numbers; newline formatting is
+allowed but not necessary. Since the matrix should by construction be
+symmetric there is no difference between column-major and row-major
+order! The covariance matrix</p>
+<blockquote>
+<div>[ 1      0.75  -0.25]</div></blockquote>
+<dl class="docutils">
+<dt>C =  [ 0.75   1.25  -0.50]</dt>
+<dd>[-0.25  -0.50   0.85]</dd>
+</dl>
+<p>Can be represented by the file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span>
+<span class="mf">0.75</span>
+<span class="o">-</span><span class="mf">0.25</span>
+<span class="mf">0.75</span>
+<span class="mf">1.25</span>
+<span class="o">-</span><span class="mf">0.50</span>
+<span class="o">-</span><span class="mf">0.25</span>
+<span class="o">-</span><span class="mf">0.50</span>
+<span class="mf">0.85</span>
+</pre></div>
+</div>
+<p>without newlines, or alternatively:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span>       <span class="mf">0.75</span>  <span class="o">-</span><span class="mf">0.25</span>
+<span class="mf">0.75</span>    <span class="mf">1.25</span>  <span class="o">-</span><span class="mf">0.50</span>
+<span class="o">-</span><span class="mf">0.25</span>  <span class="o">-</span><span class="mf">0.50</span>   <span class="mf">0.85</span>
+</pre></div>
+</div>
+<p>with newlines.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../update/index.html" title="The smoother update in ERT"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../workflows/index.html" title="Workflows"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../manual.html">ERT 2.3 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright Equinor.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
+    </div>
+  </body>
+</html>
