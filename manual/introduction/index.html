@@ -93,8 +93,8 @@
 <p>The reservoir model for a green field is based on a range subsurface input
 including seismic data, a geological concept, well logs and fluid samples. All
 of this data is uncertain, and it is quite obvious that the resulting reservoir
-model is quite uncertain. Although uncertain reservoir models are still the only
-tool we have when we make reservoir management decisions for the future.</p>
+model is quite uncertain. Although uncertain - reservoir models are still the
+only tool we have when we make reservoir management decisions for the future.</p>
 <p>Since reservoir models are very important for future predictions there is much
 focus on reducing the uncertainty in the models. When the field has been in
 production for some time one can use true data assembled from the producing
@@ -102,8 +102,9 @@ field to update the model. This process is commonly called <em>history matching<
 the petroleum industry, in this manual we will use the term <em>model updating</em>.
 Before the model updating process can start you will need:</p>
 <ol class="arabic simple">
+<li>A reservoir model which has been <em>parameterized</em> with a parameter set
+<span class="math notranslate">\(\{\lambda\}\)</span>.</li>
 <li>Observation data from the producing field <span class="math notranslate">\(d\)</span>.</li>
-<li>A reservoir model which has been <em>parameterized</em> with a parameter set <span class="math notranslate">\(\{\lambda\}\)</span>.</li>
 </ol>
 <p>Then the the actual model updating goes like this:</p>
 <ol class="arabic simple">
@@ -113,13 +114,37 @@ Before the model updating process can start you will need:</p>
 <span class="math notranslate">\(\{\lambda'\}\)</span> are calculated.</li>
 </ol>
 <p>Model updating falls into the general category of <em>inverse problems</em> - i.e. we
-know the results and want to determine the input parameters which gave rise to
-these results.</p>
+know the results and want to determine the input parameters which reproduce
+these results. In statistical literature the phe process is often called
+<em>conditioning</em>.</p>
 <p>It is very important to remember that the sole reason for doing model updating
 is to be able to make better predictions for the future, the history has
 happened already anyway!</p>
 <div class="section" id="embrace-the-uncertainty">
 <h2>Embrace the uncertainty<a class="headerlink" href="#embrace-the-uncertainty" title="Permalink to this headline">¶</a></h2>
+<p>The main purpose of the model updating process is to reduce the uncertainty in
+the description of the reservoir, however it is important to remember that the
+goal is <em>not</em> to get rid of all the uncertainty and find ont true answer. There
+are two reasons for this:</p>
+<ol class="arabic simple">
+<li>The data used when conditioning the model is also uncertain. E.g.
+measurements of e.g. water cut and GOR is limited by the precision in the
+measurement apparatus and also the allocation procedures. For example for 4D
+seismic the uncertainty is large.</li>
+<li>The model updating process will take place in the abstract space spanned by
+the parameters <span class="math notranslate">\(\{\lambda\}\)</span> - unless you are working on a synthetic
+example the <em>real reservoir</em> is certainly not in this space.</li>
+</ol>
+<p>So the goal is to update the parameters <span class="math notranslate">\(\{\lambda\}\)</span> so that the
+simulations agree with the observations on average, with a variability which is
+of the same order of magnitude as the uncertainty in the observations. The
+assumption is then that if this model is used for predictions it will be
+unbiased and give a realistic estimate of the future uncertainty. This
+illustrated in figure <code class="xref std std-numref docutils literal notranslate"><span class="pre">ensemble</span></code>.</p>
+<div class="figure" id="id1">
+<a class="reference internal image-reference" href="../_images/bpr.jpg"><img alt="../_images/bpr.jpg" src="../_images/bpr.jpg" style="width: 1100.8px; height: 619.2px;" /></a>
+<p class="caption"><span class="caption-text">Ensemble plots before and after model updating.</span></p>
+</div>
 </div>
 <div class="section" id="ensemble-kalman-filter-enkf">
 <h2>Ensemble Kalman Filter - EnKF<a class="headerlink" href="#ensemble-kalman-filter-enkf" title="Permalink to this headline">¶</a></h2>
@@ -182,11 +207,6 @@ depends on the relative weight of the uncertainties <span class="math notranslat
 <span class="math notranslate">\(\sigma_d\)</span>. For the updated uncertainty the key take away message is that
 the updated uncertainty will always be smaller than the forecasted uncertainty:
 <span class="math notranslate">\(\sigma_k &lt; \sigma_k^{\ast}\)</span>.</p>
-<div class="figure">
-<a class="reference internal image-reference" href="../_images/apollo.jpg"><img alt="../_images/apollo.jpg" src="../_images/apollo.jpg" style="width: 559.4px; height: 807.6px;" /></a>
-</div>
-<p>The engineers at NASA used the Kalman Filter when designing the navigation
-systems for the Apollo space program.</p>
 </div>
 <div class="section" id="using-an-ensemble-to-estimate-the-uncertainty-enkf">
 <h3>Using an ensemble to estimate the uncertainty: EnKF<a class="headerlink" href="#using-an-ensemble-to-estimate-the-uncertainty-enkf" title="Permalink to this headline">¶</a></h3>
