@@ -143,8 +143,18 @@ unbiased and give a realistic estimate of the future uncertainty. This
 illustrated in figure <code class="xref std std-numref docutils literal notranslate"><span class="pre">ensemble</span></code>.</p>
 <div class="figure" id="id1">
 <a class="reference internal image-reference" href="../_images/bpr.jpg"><img alt="../_images/bpr.jpg" src="../_images/bpr.jpg" style="width: 1100.8px; height: 619.2px;" /></a>
-<p class="caption"><span class="caption-text">Ensemble plots before and after model updating.</span></p>
+<p class="caption"><span class="caption-text">Ensemble plots before and after model updating, for one succesfull updating
+and one updating which has gone wrong.</span></p>
 </div>
+<p>All the plots show simulations pressure in a cell as a function of time, with
+measurements. Plots (1) and (3) show simulations before the model updating (i.e.
+the <em>prior</em>) and plots (2) and (4) show the plots after the update process (the
+<em>posterior</em>). The dashed vertical line is meant to illustrate the change from
+history to prediction.</p>
+<p>The left case with plots (1) and (2) is a succesfull history matching project.
+The simulations from the posterior distribution are centered around the observed
+values and the spread - i.e. uncertainty - is of the same order of magnitude as
+the observation uncertainty.</p>
 </div>
 <div class="section" id="ensemble-kalman-filter-enkf">
 <h2>Ensemble Kalman Filter - EnKF<a class="headerlink" href="#ensemble-kalman-filter-enkf" title="Permalink to this headline">¶</a></h2>

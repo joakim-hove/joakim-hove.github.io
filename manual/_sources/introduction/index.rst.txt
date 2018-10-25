@@ -63,7 +63,19 @@ illustrated in figure :numref:`ensemble`.
 .. figure:: images/bpr.jpg
    :scale: 20%
 
-   Ensemble plots before and after model updating.
+   Ensemble plots before and after model updating, for one succesfull updating
+   and one updating which has gone wrong.
+
+All the plots show simulations pressure in a cell as a function of time, with
+measurements. Plots (1) and (3) show simulations before the model updating (i.e.
+the *prior*) and plots (2) and (4) show the plots after the update process (the
+*posterior*). The dashed vertical line is meant to illustrate the change from
+history to prediction.
+
+The left case with plots (1) and (2) is a succesfull history matching project.
+The simulations from the posterior distribution are centered around the observed
+values and the spread - i.e. uncertainty - is of the same order of magnitude as
+the observation uncertainty.
 
 
 Ensemble Kalman Filter - EnKF
