@@ -5,6 +5,9 @@ Running simulations - the Forward Model
 The forward model
 -----------------
 
+The runpath directory
+---------------------
+
 Default jobs
 ~~~~~~~~~~~~
 
