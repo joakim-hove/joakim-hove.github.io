@@ -75,7 +75,25 @@ history to prediction.
 The left case with plots (1) and (2) is a succesfull history matching project.
 The simulations from the posterior distribution are centered around the observed
 values and the spread - i.e. uncertainty - is of the same order of magnitude as
-the observation uncertainty.
+the observation uncertainty. From this case we can reasonably expect that
+predictions will be unbiased with an reasonable estimate of the uncertainty.
+
+For the right hand case shown in plots (3) and (4) the model updating has *not*
+been successfull and more work is required. Looking at the posterior solution we
+see that the simulations are not centered around the observed values, when the
+observed values from the historical period are not correctly reproduced there
+is no reason to assume that the predictions will be correct either. Furthermore
+we see that the uncertainty in the posterior case (4) is much smaller than the
+uncertainty in the observations - this does not make sense; although our goal is
+to reduce the uncertainty it should not be reduced significantly beyond the
+uncertainty in the observations. The predictions from (4) will most probably be
+biased and greatly underestimate the future uncertainty [#]_.
+
+
+.. [#] : It should be emphasized that plots (3) and (4) show one simulated
+         quantity from an assumed larger set of observations, in general there
+         has been a different set of observations which has induced these large
+         and unwanted updates.
 
 
 Ensemble Kalman Filter - EnKF
