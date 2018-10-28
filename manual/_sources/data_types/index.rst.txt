@@ -25,7 +25,7 @@ types in ert can be categorized in two ways:
 
 
 
-.. [#] : *Simulator* should in this context be understood as the complete
+.. [#] *Simulator* should in this context be understood as the complete
        forward model, including various pre and post processing steps in
        addition to the actual reservoir simulation.
 
