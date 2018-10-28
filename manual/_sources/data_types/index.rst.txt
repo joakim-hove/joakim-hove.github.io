@@ -53,7 +53,7 @@ generate a file which can be used by the simulator.
 
 In the main config file a GEN_KW instance is defined as follows:
 
-	::
+::
 
 		GEN_KW  ID  templates/template.txt  include.txt  priors.txt
 
