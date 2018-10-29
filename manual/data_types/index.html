@@ -62,7 +62,15 @@
 <li><a class="reference internal" href="#loading-gen-kw-values-from-an-external-file">Loading GEN_KW values from an external file</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#d-field-parameters-field">3D field parameters: FIELD</a></li>
+<li><a class="reference internal" href="#d-field-parameters-field">3D field parameters: FIELD</a><ul>
+<li><a class="reference internal" href="#field-initialization">Field initialization</a><ul>
+<li><a class="reference internal" href="#initialization-with-init-files">Initialization with INIT_FILES</a></li>
+<li><a class="reference internal" href="#initialization-with-forward-init">Initialization with FORWARD_INIT</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#field-transformations">Field transformations</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#d-surface-parameters-surface">2D Surface parameters: SURFACE</a></li>
 <li><a class="reference internal" href="#general-vector-parameters-gen-param">General vector parameters: GEN_PARAM</a></li>
 </ul>
@@ -126,11 +134,11 @@ is how you configure which uncertainty parameters should be studied. The data
 types in ert can be categorized in two ways:</p>
 <ol class="arabic simple">
 <li>How the data type behaves dynamically: is it a static parameter like porosity
-or a relperm parameter - i.e. does it serve as <em>input</em> to the simulator, or
+or permeability - i.e. does it serve as <em>input</em> to the simulator, or
 is it a quantity which is generated as a result from the simulation. When
 understanding the model updating algorithm and process it is important to
 understand this difference properly.</li>
-<li>How the data type is implemented, what type of files does it and read write,
+<li>How the data type is implemented, what type of files does it read and write,
 how is it configured and so on.</li>
 </ol>
 <p>NB: All datatypes have a common namespace; i.e. a globally unique keyword.</p>
@@ -144,8 +152,8 @@ addition to the actual reservoir simulation.</td></tr>
 </table>
 <div class="section" id="parameters">
 <h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
-<p>The <em>parameter</em> datatypes will serve as input to the reservoir simulator. For a
-pure uncertainty study they will pass right through, model updating update
+<p>The <em>parameter</em> datatypes will serve as input to the simulator. For a pure
+uncertainty study they will pass right through, model updating update
 parameters. Sample internally or load externally.</p>
 <div class="section" id="scalar-parameters-with-a-template-gen-kw">
 <h3>Scalar parameters with a template: GEN_KW<a class="headerlink" href="#scalar-parameters-with-a-template-gen-kw" title="Permalink to this headline">¶</a></h3>
@@ -167,11 +175,11 @@ that you must implement it yourself in the forward model.</td></tr>
 </div>
 <p>Here ID is an (arbitrary) unique string, <code class="code docutils literal notranslate"><span class="pre">templates/template.txt</span></code> is the
 name of a template file, <code class="code docutils literal notranslate"><span class="pre">include.txt</span></code> is the name of the file which is
-made for each member based on the template file <code class="code docutils literal notranslate"><span class="pre">templates/template.txt</span></code>
-and the prior distribution <code class="code docutils literal notranslate"><span class="pre">priors.txt</span></code> is a file containing a list of
-parametrized keywords and a prior distribution for each. Note that you must
-manually edit the input files of the simulator to ensure that the generated file
-<code class="code docutils literal notranslate"><span class="pre">include.txt</span></code> is included.</p>
+made for each realization based on the template file
+<code class="code docutils literal notranslate"><span class="pre">templates/template.txt</span></code> and the prior distribution <code class="code docutils literal notranslate"><span class="pre">priors.txt</span></code> is
+a file containing a list of parametrized keywords and a prior distribution for
+each. Note that you must manually edit the input files of the simulator to
+ensure that the generated file <code class="code docutils literal notranslate"><span class="pre">include.txt</span></code> is included.</p>
 <div class="section" id="example-configuring-gen-kw-to-estimate-multpv-values">
 <h4>Example: configuring GEN_KW to estimate MULTPV values<a class="headerlink" href="#example-configuring-gen-kw-to-estimate-multpv-values" title="Permalink to this headline">¶</a></h4>
 <p>Let us consider an example where the GEN_KW parameter type is used to estimate
@@ -258,7 +266,7 @@ then Y = exp(X) is log normally distributed.</p>
 (tendency to take large values). To set a log normal prior, use the keyword
 LOGNORMAL. It takes two arguments, the mean and standard deviation of the
 <em>logarithm</em> of the variable:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">VAR2</span>   <span class="n">LOGNORMAL</span>  <span class="mi">0</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">VAR2</span>   <span class="n">LOGNORMAL</span>  <span class="mi">0</span>  <span class="mi">1</span>
 </pre></div>
 </div>
 </div>
@@ -316,7 +324,7 @@ probability weight towards one of the bounds.</p>
 <h5>CONST<a class="headerlink" href="#const" title="Permalink to this headline">¶</a></h5>
 <p>The keyword CONST is used to assign a Dirac distribution to a variable, i.e. set
 it to a constant value. Here is an example of use:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CONST</span> <span class="mf">1.0</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">VAR6</span> <span class="n">CONST</span> <span class="mf">1.0</span>
 </pre></div>
 </div>
 </div>
@@ -325,7 +333,7 @@ it to a constant value. Here is an example of use:</p>
 <p>The keyword DUNIF is used to assign a discrete uniform distribution. It takes
 three arguments, the number bins, a minimum and maximum value. Here is an
 example which creates a discrete uniform distribution on [0,1] with 25 bins:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DUNIF</span> <span class="mi">25</span> <span class="mi">0</span> <span class="mi">1</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">VAR7</span> <span class="n">DUNIF</span> <span class="mi">25</span> <span class="mi">0</span> <span class="mi">1</span>
 </pre></div>
 </div>
 </div>
@@ -334,7 +342,7 @@ example which creates a discrete uniform distribution on [0,1] with 25 bins:</p>
 <p>The ERRF keyword is used to define a prior resulting from applying the error
 function to a normally distributed variable with mean 0 and variance 1. The
 keyword takes four arguments:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ERRF</span> <span class="n">MIN</span> <span class="n">MAX</span> <span class="n">SKEWNESS</span> <span class="n">WIDTH</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">VAR8</span> <span class="n">ERRF</span> <span class="n">MIN</span> <span class="n">MAX</span> <span class="n">SKEWNESS</span> <span class="n">WIDTH</span>
 </pre></div>
 </div>
 <p>The arguments MIN and MAX sets the minimum and maximum value of the transform.
@@ -347,7 +355,7 @@ to be unimodal, whereas WIDTH less than one will create a bi-modal distribution.
 <h5>DERRF<a class="headerlink" href="#derrf" title="Permalink to this headline">¶</a></h5>
 <p>The keyword DERRF is similar to ERRF, but will create a discrete output. DERRF
 takes 5 arguments:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DERRF</span> <span class="n">NBINS</span> <span class="n">MIN</span> <span class="n">MAX</span> <span class="n">SKEWNESS</span> <span class="n">WIDTH</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">VAR9</span> <span class="n">DERRF</span> <span class="n">NBINS</span> <span class="n">MIN</span> <span class="n">MAX</span> <span class="n">SKEWNESS</span> <span class="n">WIDTH</span>
 </pre></div>
 </div>
 <p>NBINS set the number of discrete values, and the other arguments have the same
@@ -397,40 +405,53 @@ intend to update the GEN_KW variable you can use the distribution RAW.</p>
 </div>
 <div class="section" id="d-field-parameters-field">
 <h3>3D field parameters: FIELD<a class="headerlink" href="#d-field-parameters-field" title="Permalink to this headline">¶</a></h3>
-<p>The FIELD keyword is used to parametrize quantities which have extent over the
-full grid. Both dynamic properties like pressure, and static properties like
-porosity, are implemented in terms of FIELD objects. When adding fields in the
-config file the syntax is a bit different for dynamic fields (typically solution
-data from ECLIPSE) and parameter fields like permeability and porosity.</p>
-<blockquote>
-<div><strong>Dynamic fields</strong></div></blockquote>
-<p>To add a dynamic field the entry in the configuration file looks like this:</p>
-<dl class="docutils">
-<dt>::</dt>
-<dd>FIELD   &lt;ID&gt;   DYNAMIC  MIN:X  MAX:Y</dd>
-</dl>
-<p>In this case ID is not an arbitrary string; it must coincide with the keyword name found in the ECLIPSE restart file, e.g. PRESSURE. Optionally, you can add a minimum and/or a maximum value with MIN:X and MAX:Y.</p>
-<p><em>Example A:</em></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span> <span class="n">Adding</span> <span class="n">pressure</span> <span class="n">field</span> <span class="p">(</span><span class="n">unbounded</span><span class="p">)</span>
-<span class="n">FIELD</span> <span class="n">PRESSURE</span> <span class="n">DYNAMIC</span>
+<p>The FIELD data type is used to parametrize quantities which have extent over the
+full grid; porosity and permeability are the most typical examples of quantities
+which are estimated and modelled with the FIELD data type. In the configuration
+file the FIELD keywords are configured like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FIELD</span>  <span class="n">PORO</span> <span class="n">PARAMETER</span>  <span class="n">poro</span><span class="o">.</span><span class="n">grdecl</span>  <span class="n">INIT_FILES</span><span class="p">:</span><span class="o">/</span><span class="n">path</span><span class="o">/%</span><span class="n">d</span>  <span class="n">MIN</span><span class="p">:</span><span class="n">X</span> <span class="n">MAX</span><span class="p">:</span><span class="n">Y</span> <span class="n">OUTPUT_TRANSFORM</span><span class="p">:</span><span class="n">FUNC</span> <span class="n">INIT_TRANSFORM</span><span class="p">:</span><span class="n">FUNC</span>
 </pre></div>
 </div>
-<p><em>Example B:</em></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span> <span class="n">Adding</span> <span class="n">a</span> <span class="n">bounded</span> <span class="n">water</span> <span class="n">saturation</span> <span class="n">field</span>
-<span class="n">FIELD</span> <span class="n">SWAT</span> <span class="n">DYNAMIC</span> <span class="n">MIN</span><span class="p">:</span><span class="mf">0.2</span> <span class="n">MAX</span><span class="p">:</span><span class="mf">0.95</span>
+<p>PORO is in principle an arbitrary string ID, but if the fields in question
+represent e.g. the porosity use of a matching string of course makes sense. The
+string “PARAMETER” serves no purpose at the moment, but is legacy from the
+time when ERT could do full EnKF and also needed to handle dynamic fields like
+pressure and saturations.</p>
+<p>The “poro.grdecl” argument represents the name of the file which ert will
+prepare for the forward model, observe the reservoir data file must have an
+<cite>INCLUDE</cite> statement corresponding to this file, i.e.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">INCLUDE</span>
+    <span class="s1">&#39;poro.grdecl&#39;</span> <span class="o">/</span>
 </pre></div>
 </div>
-<p><strong>Parameter fields</strong></p>
-<p>A parameter field (e.g. porosity or permeability) is defined as follows:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FIELD</span>  <span class="n">ID</span> <span class="n">PARAMETER</span>   <span class="o">&lt;</span><span class="n">ECLIPSE_FILE</span><span class="o">&gt;</span>  <span class="n">INIT_FILES</span><span class="p">:</span><span class="o">/</span><span class="n">path</span><span class="o">/%</span><span class="n">d</span>  <span class="n">MIN</span><span class="p">:</span><span class="n">X</span> <span class="n">MAX</span><span class="p">:</span><span class="n">Y</span> <span class="n">OUTPUT_TRANSFORM</span><span class="p">:</span><span class="n">FUNC</span> <span class="n">INIT_TRANSFORM</span><span class="p">:</span><span class="n">FUNC</span>
-</pre></div>
-</div>
-<p>Here ID is again an arbitrary string, ECLIPSE_FILE is the name of the file the
+<p>For the example above.</p>
+<div class="section" id="field-initialization">
+<h4>Field initialization<a class="headerlink" href="#field-initialization" title="Permalink to this headline">¶</a></h4>
+<p>Observe that ERT can <em>not</em> sample field variables internally, they must be
+generated using another application - typically geo modelling software like RMS;
+so to use the FIELD datatype you must have a workflow external to ERT which can
+create/sample the fields. There are <em>two</em> ways to initialize the fields: use
+<cite>INIT_FILES</cite> to load pregenerated initial fields or <cite>FORWARD_INIT</cite> to load as
+part of the forward model.</p>
+<div class="section" id="initialization-with-init-files">
+<h5>Initialization with INIT_FILES<a class="headerlink" href="#initialization-with-init-files" title="Permalink to this headline">¶</a></h5>
+<p>, either
+you can generate the field realizations up front and then use the <cite>INIT_FILES:</cite>
+when configuring the field. Then the <cite>INIT_FILES</cite> attribute should be a filename
+<em>with</em> an embedded “%d” which can be used to load the initial files.</p>
+<p>arbitrary string, ECLIPSE_FILE is the name of the file the
 enkf will export this field to when running simulations. Note that there should
 be an IMPORT statement in the ECLIPSE data file corresponding to the name given
 with ECLIPSE_FILE. INIT_FILES is a filename (with an embedded %d) to load the
 initial field from. Can be RMS ROFF format, ECLIPSE restart format or ECLIPSE
 GRDECL format.</p>
+</div>
+<div class="section" id="initialization-with-forward-init">
+<h5>Initialization with FORWARD_INIT<a class="headerlink" href="#initialization-with-forward-init" title="Permalink to this headline">¶</a></h5>
+</div>
+</div>
+<div class="section" id="field-transformations">
+<h4>Field transformations<a class="headerlink" href="#field-transformations" title="Permalink to this headline">¶</a></h4>
 <p>The input arguments MIN, MAX, INIT_TRANSFORM and OUTPUT_TRANSFORM are all
 optional. MIN and MAX are as for dynamic fields.</p>
 <p>For Assisted history matching, the variables in ERT should be normally
@@ -469,15 +490,7 @@ faster than for plain text files. If you give the ECLIPSE_FILE with the
 extension .grdecl (arbitrary case), enkf will produce ordinary .grdecl files,
 which are loaded with an INCLUDE statement. This is probably what most users are
 used to beforehand - but we recomend the IMPORT form.</p>
-<p><strong>General fields</strong></p>
-<p>In addition to dynamic and parameter field there is also a general field, where
-you have fine grained control over input/output. Use of the general field type
-is only relevant for advanced features. The arguments for the general field type
-are as follows:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FIELD</span>   <span class="n">ID</span>  <span class="n">GENERAL</span>    <span class="n">FILE_GENERATED_BY_ENKF</span>  <span class="n">FILE_LOADED_BY_ENKF</span>    <span class="o">&lt;</span><span class="n">OPTIONS</span><span class="o">&gt;</span>
-</pre></div>
 </div>
-<p>The OPTIONS argument is the same as for the parameter field.</p>
 </div>
 <div class="section" id="d-surface-parameters-surface">
 <h3>2D Surface parameters: SURFACE<a class="headerlink" href="#d-surface-parameters-surface" title="Permalink to this headline">¶</a></h3>

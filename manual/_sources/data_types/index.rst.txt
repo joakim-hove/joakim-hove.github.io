@@ -14,12 +14,12 @@ is how you configure which uncertainty parameters should be studied. The data
 types in ert can be categorized in two ways:
 
 1. How the data type behaves dynamically: is it a static parameter like porosity
-   or a relperm parameter - i.e. does it serve as *input* to the simulator, or
+   or permeability - i.e. does it serve as *input* to the simulator, or
    is it a quantity which is generated as a result from the simulation. When
    understanding the model updating algorithm and process it is important to
    understand this difference properly.
 
-2. How the data type is implemented, what type of files does it and read write,
+2. How the data type is implemented, what type of files does it read and write,
    how is it configured and so on.
 
 NB: All datatypes have a common namespace; i.e. a globally unique keyword.
@@ -33,8 +33,8 @@ NB: All datatypes have a common namespace; i.e. a globally unique keyword.
 Parameters
 ----------
 
-The *parameter* datatypes will serve as input to the reservoir simulator. For a
-pure uncertainty study they will pass right through, model updating update
+The *parameter* datatypes will serve as input to the simulator. For a pure
+uncertainty study they will pass right through, model updating update
 parameters. Sample internally or load externally.
 
 
@@ -58,11 +58,11 @@ In the main config file a GEN_KW instance is defined as follows:
 
 Here ID is an (arbitrary) unique string, :code:`templates/template.txt` is the
 name of a template file, :code:`include.txt` is the name of the file which is
-made for each member based on the template file :code:`templates/template.txt`
-and the prior distribution :code:`priors.txt` is a file containing a list of
-parametrized keywords and a prior distribution for each. Note that you must
-manually edit the input files of the simulator to ensure that the generated file
-:code:`include.txt` is included.
+made for each realization based on the template file
+:code:`templates/template.txt` and the prior distribution :code:`priors.txt` is
+a file containing a list of parametrized keywords and a prior distribution for
+each. Note that you must manually edit the input files of the simulator to
+ensure that the generated file :code:`include.txt` is included.
 
 
 Example: configuring GEN_KW to estimate MULTPV values
@@ -165,7 +165,7 @@ LOGNORMAL. It takes two arguments, the mean and standard deviation of the
 
 ::
    
-   VAR2   LOGNORMAL  0
+   VAR2   LOGNORMAL  0  1
 
 TRUNCATED_NORMAL 
 ,,,,,,,,,,,,,,,,,
@@ -233,7 +233,7 @@ it to a constant value. Here is an example of use:
 
 ::
 
-    CONST 1.0
+   VAR6 CONST 1.0
 
 DUNIF 
 ,,,,,
@@ -244,7 +244,7 @@ example which creates a discrete uniform distribution on [0,1] with 25 bins:
 
 ::
 
-    DUNIF 25 0 1
+   VAR7 DUNIF 25 0 1
 
 ERRF
 ,,,,,
@@ -255,7 +255,7 @@ keyword takes four arguments:
 
 ::
 
-    ERRF MIN MAX SKEWNESS WIDTH
+  VAR8 ERRF MIN MAX SKEWNESS WIDTH
 
 The arguments MIN and MAX sets the minimum and maximum value of the transform.
 Zero SKEWNESS results in a symmetric distribution, whereas negative SKEWNESS
@@ -272,7 +272,7 @@ takes 5 arguments:
 
 ::
 
-    DERRF NBINS MIN MAX SKEWNESS WIDTH
+  VAR9 DERRF NBINS MIN MAX SKEWNESS WIDTH
 
 NBINS set the number of discrete values, and the other arguments have the same
 effect as in ERRF.
@@ -328,49 +328,70 @@ intend to update the GEN_KW variable you can use the distribution RAW.
 3D field parameters: FIELD
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The FIELD keyword is used to parametrize quantities which have extent over the
-full grid. Both dynamic properties like pressure, and static properties like
-porosity, are implemented in terms of FIELD objects. When adding fields in the
-config file the syntax is a bit different for dynamic fields (typically solution
-data from ECLIPSE) and parameter fields like permeability and porosity.
-
-	**Dynamic fields**
-
-To add a dynamic field the entry in the configuration file looks like this:
-
-::
-	FIELD   <ID>   DYNAMIC  MIN:X  MAX:Y
-
-In this case ID is not an arbitrary string; it must coincide with the keyword name found in the ECLIPSE restart file, e.g. PRESSURE. Optionally, you can add a minimum and/or a maximum value with MIN:X and MAX:Y.
-
-*Example A:*
+The FIELD data type is used to parametrize quantities which have extent over the
+full grid; porosity and permeability are the most typical examples of quantities
+which are estimated and modelled with the FIELD data type. In the configuration
+file the FIELD keywords are configured like this:
 
 ::
 
-	-- Adding pressure field (unbounded)
-	FIELD PRESSURE DYNAMIC
+	FIELD  PORO PARAMETER  poro.grdecl  INIT_FILES:/path/%d  MIN:X MAX:Y OUTPUT_TRANSFORM:FUNC INIT_TRANSFORM:FUNC  
 
-*Example B:*
+PORO is in principle an arbitrary string ID, but if the fields in question
+represent e.g. the porosity use of a matching string of course makes sense. The
+string "PARAMETER" serves no purpose at the moment, but is legacy from the
+time when ERT could do full EnKF and also needed to handle dynamic fields like
+pressure and saturations. 
 
-::
-
-	-- Adding a bounded water saturation field
-	FIELD SWAT DYNAMIC MIN:0.2 MAX:0.95
-
-**Parameter fields**
-
-A parameter field (e.g. porosity or permeability) is defined as follows:
+The "poro.grdecl" argument represents the name of the file which ert will
+prepare for the forward model, observe the reservoir data file must have an
+`INCLUDE` statement corresponding to this file, i.e.
 
 ::
 
-	FIELD  ID PARAMETER   <ECLIPSE_FILE>  INIT_FILES:/path/%d  MIN:X MAX:Y OUTPUT_TRANSFORM:FUNC INIT_TRANSFORM:FUNC  
+   INCLUDE
+       'poro.grdecl' /
 
-Here ID is again an arbitrary string, ECLIPSE_FILE is the name of the file the
+For the example above.
+
+
+Field initialization
+....................
+
+Observe that ERT can *not* sample field variables internally, they must be
+generated using another application - typically geo modelling software like RMS;
+so to use the FIELD datatype you must have a workflow external to ERT which can
+create/sample the fields. There are *two* ways to initialize the fields: use
+`INIT_FILES` to load pregenerated initial fields or `FORWARD_INIT` to load as
+part of the forward model.
+
+Initialization with INIT_FILES
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+
+
+
+, either
+you can generate the field realizations up front and then use the `INIT_FILES:`
+when configuring the field. Then the `INIT_FILES` attribute should be a filename
+*with* an embedded "%d" which can be used to load the initial files. 
+
+
+arbitrary string, ECLIPSE_FILE is the name of the file the
 enkf will export this field to when running simulations. Note that there should
 be an IMPORT statement in the ECLIPSE data file corresponding to the name given
 with ECLIPSE_FILE. INIT_FILES is a filename (with an embedded %d) to load the
 initial field from. Can be RMS ROFF format, ECLIPSE restart format or ECLIPSE
 GRDECL format.
+
+Initialization with FORWARD_INIT
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+
+
+
+Field transformations
+.....................
+
+
 
 The input arguments MIN, MAX, INIT_TRANSFORM and OUTPUT_TRANSFORM are all
 optional. MIN and MAX are as for dynamic fields.
@@ -417,18 +438,7 @@ extension .grdecl (arbitrary case), enkf will produce ordinary .grdecl files,
 which are loaded with an INCLUDE statement. This is probably what most users are
 used to beforehand - but we recomend the IMPORT form.
 
-**General fields**
 
-In addition to dynamic and parameter field there is also a general field, where
-you have fine grained control over input/output. Use of the general field type
-is only relevant for advanced features. The arguments for the general field type
-are as follows:
-
-::
-
-	FIELD   ID  GENERAL    FILE_GENERATED_BY_ENKF  FILE_LOADED_BY_ENKF    <OPTIONS>
-
-The OPTIONS argument is the same as for the parameter field.
 
 
 2D Surface parameters: SURFACE
