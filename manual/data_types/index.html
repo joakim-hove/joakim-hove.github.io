@@ -409,7 +409,7 @@ intend to update the GEN_KW variable you can use the distribution RAW.</p>
 full grid; porosity and permeability are the most typical examples of quantities
 which are estimated and modelled with the FIELD data type. In the configuration
 file the FIELD keywords are configured like this:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FIELD</span>  <span class="n">PORO</span> <span class="n">PARAMETER</span>  <span class="n">poro</span><span class="o">.</span><span class="n">grdecl</span>  <span class="n">INIT_FILES</span><span class="p">:</span><span class="o">/</span><span class="n">path</span><span class="o">/%</span><span class="n">d</span>  <span class="n">MIN</span><span class="p">:</span><span class="n">X</span> <span class="n">MAX</span><span class="p">:</span><span class="n">Y</span> <span class="n">OUTPUT_TRANSFORM</span><span class="p">:</span><span class="n">FUNC</span> <span class="n">INIT_TRANSFORM</span><span class="p">:</span><span class="n">FUNC</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FIELD</span>  <span class="n">PORO</span> <span class="n">PARAMETER</span>  <span class="n">poro</span><span class="o">.</span><span class="n">grdecl</span>  <span class="o">.....</span>
 </pre></div>
 </div>
 <p>PORO is in principle an arbitrary string ID, but if the fields in question
@@ -428,23 +428,30 @@ prepare for the forward model, observe the reservoir data file must have an
 <div class="section" id="field-initialization">
 <h4>Field initialization<a class="headerlink" href="#field-initialization" title="Permalink to this headline">¶</a></h4>
 <p>Observe that ERT can <em>not</em> sample field variables internally, they must be
-generated using another application - typically geo modelling software like RMS;
-so to use the FIELD datatype you must have a workflow external to ERT which can
-create/sample the fields. There are <em>two</em> ways to initialize the fields: use
+supplied through another application - typically geo modelling software like
+RMS; so to use the FIELD datatype you must have a workflow external to ERT which
+can create/sample the fields. When you have established a workflow for
+generating these fields externally there are <em>two</em> ways to load them into ERT:
 <cite>INIT_FILES</cite> to load pregenerated initial fields or <cite>FORWARD_INIT</cite> to load as
 part of the forward model.</p>
 <div class="section" id="initialization-with-init-files">
 <h5>Initialization with INIT_FILES<a class="headerlink" href="#initialization-with-init-files" title="Permalink to this headline">¶</a></h5>
-<p>, either
-you can generate the field realizations up front and then use the <cite>INIT_FILES:</cite>
-when configuring the field. Then the <cite>INIT_FILES</cite> attribute should be a filename
-<em>with</em> an embedded “%d” which can be used to load the initial files.</p>
-<p>arbitrary string, ECLIPSE_FILE is the name of the file the
-enkf will export this field to when running simulations. Note that there should
-be an IMPORT statement in the ECLIPSE data file corresponding to the name given
-with ECLIPSE_FILE. INIT_FILES is a filename (with an embedded %d) to load the
-initial field from. Can be RMS ROFF format, ECLIPSE restart format or ECLIPSE
-GRDECL format.</p>
+<p>In the situation where you do not have geo modelling as a part of the forward
+model you will typically use the geo modelling software to create an ensemble of
+geological realisations up front. Assuming you intend to update the porosity
+these realisations should typically be in the form of files
+<code class="docutils literal notranslate"><span class="pre">/path/poro_0.grdecl,</span> <span class="pre">/path/poro_1.grdecl,</span> <span class="pre">...</span> <span class="pre">/path/poro_99.grdecl</span></code>. The
+<code class="docutils literal notranslate"><span class="pre">INIT_FILES:</span></code> directive is used to configure ERT to load those files when ERT
+is initializing the data. The number <code class="docutils literal notranslate"><span class="pre">0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">...</span></code> should be replaced with
+the integer format specified <code class="docutils literal notranslate"><span class="pre">%d</span></code> - which ERT will replace with the
+realization number runtime, i.e.</p>
+<dl class="docutils">
+<dt>::</dt>
+<dd>FIELD … INIT_FILES:/path/poro_%d.grdecl</dd>
+</dl>
+<p>in this case. The files can be in eclipse grdecl format or rms roff format; the
+type is determined from the extension so you should use the common extensions
+<code class="docutils literal notranslate"><span class="pre">grdecl</span></code> or <code class="docutils literal notranslate"><span class="pre">roff</span></code>.</p>
 </div>
 <div class="section" id="initialization-with-forward-init">
 <h5>Initialization with FORWARD_INIT<a class="headerlink" href="#initialization-with-forward-init" title="Permalink to this headline">¶</a></h5>

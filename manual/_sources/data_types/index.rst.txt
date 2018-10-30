@@ -335,7 +335,7 @@ file the FIELD keywords are configured like this:
 
 ::
 
-	FIELD  PORO PARAMETER  poro.grdecl  INIT_FILES:/path/%d  MIN:X MAX:Y OUTPUT_TRANSFORM:FUNC INIT_TRANSFORM:FUNC  
+	FIELD  PORO PARAMETER  poro.grdecl  .....
 
 PORO is in principle an arbitrary string ID, but if the fields in question
 represent e.g. the porosity use of a matching string of course makes sense. The
@@ -359,29 +359,34 @@ Field initialization
 ....................
 
 Observe that ERT can *not* sample field variables internally, they must be
-generated using another application - typically geo modelling software like RMS;
-so to use the FIELD datatype you must have a workflow external to ERT which can
-create/sample the fields. There are *two* ways to initialize the fields: use
+supplied through another application - typically geo modelling software like
+RMS; so to use the FIELD datatype you must have a workflow external to ERT which
+can create/sample the fields. When you have established a workflow for
+generating these fields externally there are *two* ways to load them into ERT:
 `INIT_FILES` to load pregenerated initial fields or `FORWARD_INIT` to load as
 part of the forward model.
+
 
 Initialization with INIT_FILES
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 
+In the situation where you do not have geo modelling as a part of the forward
+model you will typically use the geo modelling software to create an ensemble of
+geological realisations up front. Assuming you intend to update the porosity
+these realisations should typically be in the form of files
+``/path/poro_0.grdecl, /path/poro_1.grdecl, ... /path/poro_99.grdecl``. The
+``INIT_FILES:`` directive is used to configure ERT to load those files when ERT
+is initializing the data. The number ``0, 1, 2, ...`` should be replaced with
+the integer format specified ``%d`` - which ERT will replace with the
+realization number runtime, i.e.
 
+::
+   FIELD ... INIT_FILES:/path/poro_%d.grdecl
 
-, either
-you can generate the field realizations up front and then use the `INIT_FILES:`
-when configuring the field. Then the `INIT_FILES` attribute should be a filename
-*with* an embedded "%d" which can be used to load the initial files. 
+in this case. The files can be in eclipse grdecl format or rms roff format; the
+type is determined from the extension so you should use the common extensions
+``grdecl`` or ``roff``.
 
-
-arbitrary string, ECLIPSE_FILE is the name of the file the
-enkf will export this field to when running simulations. Note that there should
-be an IMPORT statement in the ECLIPSE data file corresponding to the name given
-with ECLIPSE_FILE. INIT_FILES is a filename (with an embedded %d) to load the
-initial field from. Can be RMS ROFF format, ECLIPSE restart format or ECLIPSE
-GRDECL format.
 
 Initialization with FORWARD_INIT
 ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
