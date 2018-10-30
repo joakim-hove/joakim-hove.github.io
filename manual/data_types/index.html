@@ -655,8 +655,37 @@ the resulting file will look like this:</p>
 </div>
 <div class="section" id="simulated-data">
 <h2>Simulated data<a class="headerlink" href="#simulated-data" title="Permalink to this headline">¶</a></h2>
+<p>The datatypes in the <em>Simulated data</em> chapter correspond to datatypes which are
+used to load results from a forward model simulation and into ERT. In a model
+updating workflow instances of these datatypes are compared with observed values
+and that is used as basis for the update process. Also post processing tasks
+like plotting and QC is typically based on these data types.</p>
 <div class="section" id="summary-summary">
 <h3>Summary: SUMMARY<a class="headerlink" href="#summary-summary" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">SUMMARY</span></code> keyword is used to configure which summary vectors you want to
+load from the (Eclipse) reservoir simulation. In it’s simplest form the
+<code class="docutils literal notranslate"><span class="pre">SUMMARY</span></code> keyword just lists the vectors you wish to load, you can have
+multiple <code class="docutils literal notranslate"><span class="pre">SUMMARY</span></code> keywords in your config file, and each keyword can mention
+multiple vectors:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SUMMARY</span>  <span class="n">WWCT</span><span class="p">:</span><span class="n">OP_1</span>  <span class="n">WWCT</span><span class="p">:</span><span class="n">OP_2</span>  <span class="n">WWCT</span><span class="p">:</span><span class="n">OP_3</span>
+<span class="n">SUMMARY</span>  <span class="n">FOPT</span> <span class="n">FOPR</span>  <span class="n">FWPR</span>
+<span class="n">SUMAMRY</span>  <span class="n">GGPR</span><span class="p">:</span><span class="n">NORTH</span> <span class="n">GOPR</span><span class="p">:</span><span class="n">SOUTH</span>
+</pre></div>
+</div>
+<p>If you in the observation use the <code class="docutils literal notranslate"><span class="pre">SUMMARY_OBSERVATION</span></code> or
+<code class="docutils literal notranslate"><span class="pre">HISTORY_OBSERVATION</span></code> keyword to compare simulatons and observations for a
+particular summary vector <em>that vector is automatically added</em> to the ERT
+configuration.</p>
+<p>If you use the keyword <code class="docutils literal notranslate"><span class="pre">REFCASE</span></code> to configure an Eclipse reference case you
+can use wildcard notation to all summary vectors matching a pattern, i.e. this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">REFCASE</span> <span class="n">eclipse</span><span class="o">/</span><span class="n">refcase</span><span class="o">/</span><span class="n">CASE</span>
+<span class="n">SUMMARY</span> <span class="n">WWCT</span><span class="p">:</span><span class="o">*</span> <span class="n">WGOR</span><span class="p">:</span><span class="o">*</span>
+<span class="n">SUMMARY</span> <span class="n">F</span><span class="o">*</span>
+<span class="n">SUMMARY</span> <span class="n">G</span><span class="o">*</span><span class="p">:</span><span class="n">NORTH</span>
+</pre></div>
+</div>
+<p>will load the <code class="docutils literal notranslate"><span class="pre">WWCT</span></code> and <code class="docutils literal notranslate"><span class="pre">WGOR</span></code> vectors for all wells, all field related
+vectors and all group vectors from the <code class="docutils literal notranslate"><span class="pre">NORTH</span></code> group.</p>
 </div>
 <div class="section" id="general-data-gen-data">
 <h3>General data: GEN_DATA<a class="headerlink" href="#general-data-gen-data" title="Permalink to this headline">¶</a></h3>

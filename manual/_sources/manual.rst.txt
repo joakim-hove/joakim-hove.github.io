@@ -15,6 +15,7 @@ Welcome to ERT's documentation!
    forward_model/index
    workflows/index
    observations/index
+   eclipse/index
    update/index
    scripting/index   
    keywords/index

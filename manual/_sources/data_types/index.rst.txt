@@ -625,8 +625,44 @@ the resulting file will look like this:
 Simulated data
 --------------
 
+The datatypes in the *Simulated data* chapter correspond to datatypes which are
+used to load results from a forward model simulation and into ERT. In a model
+updating workflow instances of these datatypes are compared with observed values
+and that is used as basis for the update process. Also post processing tasks
+like plotting and QC is typically based on these data types.
+
 Summary: SUMMARY
 ~~~~~~~~~~~~~~~~
+
+The ``SUMMARY`` keyword is used to configure which summary vectors you want to
+load from the (Eclipse) reservoir simulation. In it's simplest form the
+``SUMMARY`` keyword just lists the vectors you wish to load, you can have
+multiple ``SUMMARY`` keywords in your config file, and each keyword can mention
+multiple vectors:
+
+::
+
+   SUMMARY  WWCT:OP_1  WWCT:OP_2  WWCT:OP_3
+   SUMMARY  FOPT FOPR  FWPR
+   SUMAMRY  GGPR:NORTH GOPR:SOUTH
+
+If you in the observation use the ``SUMMARY_OBSERVATION`` or
+``HISTORY_OBSERVATION`` keyword to compare simulatons and observations for a
+particular summary vector *that vector is automatically added* to the ERT
+configuration.
+
+If you use the keyword ``REFCASE`` to configure an Eclipse reference case you
+can use wildcard notation to all summary vectors matching a pattern, i.e. this:
+
+::
+
+   REFCASE eclipse/refcase/CASE
+   SUMMARY WWCT:* WGOR:*
+   SUMMARY F*
+   SUMMARY G*:NORTH
+
+will load the ``WWCT`` and ``WGOR`` vectors for all wells, all field related
+vectors and all group vectors from the ``NORTH`` group.
 
 
 General data: GEN_DATA
