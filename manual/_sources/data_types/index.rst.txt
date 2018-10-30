@@ -661,7 +661,4 @@ Pecularites of EnKF heritage include:
    `GEN_DATA` keywords incorrectly.
 
 
-Observations
-------------
-
   
