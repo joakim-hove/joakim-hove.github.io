@@ -689,6 +689,53 @@ vectors and all group vectors from the <code class="docutils literal notranslate
 </div>
 <div class="section" id="general-data-gen-data">
 <h3>General data: GEN_DATA<a class="headerlink" href="#general-data-gen-data" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">GEN_DATA</span></code> keyword is used to to load <em>arbitrary</em> which has been generated
+by the forward model. ERT does not have any awareness of the type of data
+encoded in a <code class="docutils literal notranslate"><span class="pre">GEN_DATA</span></code> keyword; it could be the result of gravimetric
+calculation or the pressure difference across a barrier in the reeservoir. This
+means that the <code class="docutils literal notranslate"><span class="pre">GEN_DATA</span></code> keyword is extremely flexible, but also slightly
+complicated to configure. Assume a <code class="docutils literal notranslate"><span class="pre">GEN_DATA</span></code> keyword is used to represent the
+result of an estimated of the position of the oil water contact which should be
+compared with a oil water contact from 4D seismic; this could be achieved with
+the configuration:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">GEN_DATA</span> <span class="mi">4</span><span class="n">DWOC</span>  <span class="n">RESULT_FILE</span><span class="p">:</span><span class="n">SimulatedWOC_</span><span class="o">%</span><span class="n">d</span><span class="o">.</span><span class="n">txt</span>  <span class="n">INPUT_FORMAT</span><span class="p">:</span><span class="n">ASCII</span>   <span class="n">REPORT_STEPS</span><span class="p">:</span><span class="mi">0</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">4DWOC</span></code> is an arbitrary unique key, <code class="docutils literal notranslate"><span class="pre">RESULT_FILE:SimulatedWOC%d.txt</span></code>
+means that ERT will look for results in the file <code class="docutils literal notranslate"><span class="pre">SimulatedWOC_0.txt</span></code>. The
+<code class="docutils literal notranslate"><span class="pre">INPUT_FORMAT:ASCII</span></code> means that ERT will expect the result file to be
+formatted as an ASCII file, the other alternative formats are
+<code class="docutils literal notranslate"><span class="pre">INPUT_FORMAT:BINARY_FLOAT</span></code> and <code class="docutils literal notranslate"><span class="pre">INPUT_FORMAT:BINARY_DOUBLE</span></code> - in general
+only the ASCII alternative is used, and in the future that should at least be
+the default.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">REPORT_STEPS:0</span></code> is tightly bound to the <code class="docutils literal notranslate"><span class="pre">%d</span></code> integer format specifier
+in the result file - at load time the <code class="docutils literal notranslate"><span class="pre">%d</span></code> is replaced with the integer values
+given in the <code class="docutils literal notranslate"><span class="pre">REPORT_STEPS:</span></code> option, for the example given above that means
+that <code class="docutils literal notranslate"><span class="pre">%d</span></code> will be replaced with <code class="docutils literal notranslate"><span class="pre">0</span></code> and ERT will look for the file
+<code class="docutils literal notranslate"><span class="pre">SimulatedWOC_0.txt</span></code>. In principle it is possible to configure several report
+steps like: <code class="docutils literal notranslate"><span class="pre">REPORT_STEPS:0,10,20</span></code> - then ERT will look for all three files
+<code class="docutils literal notranslate"><span class="pre">SimulatedWOC_0.txt,</span> <span class="pre">SimultedWOC_10.txt</span></code> and <code class="docutils literal notranslate"><span class="pre">SimulatedWOC_20.txt</span></code>. It is
+quite challenging to get this right, and the recommendation is to just stick
+with <em>one</em> result file at report step 0[#]_, in the future the possibility to
+load one keyword <code class="docutils literal notranslate"><span class="pre">GEN_DATA</span></code> for multiple report steps will probably be
+removed, but for now the <code class="docutils literal notranslate"><span class="pre">GEN_DATA</span></code> configuration is <em>quite strict</em> - it will
+fail if the <code class="docutils literal notranslate"><span class="pre">RESULT_FILE</span></code> attribute does not contain a <code class="docutils literal notranslate"><span class="pre">%d</span></code>.</p>
+<table class="docutils footnote" frame="void" id="id7" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[3]</td><td>The option is called <em>report step</em> - but the time aspect is not really
+important. You could just as well see it as an arbitrary label, the only
+important thing is that <em>if</em> you have a corresponding <code class="docutils literal notranslate"><span class="pre">GEN_OBS</span></code>
+observation of this <code class="docutils literal notranslate"><span class="pre">GEN_DATA</span></code> vector you must match the report step
+used when configuring the <code class="docutils literal notranslate"><span class="pre">GEN_DATA</span></code> and the <code class="docutils literal notranslate"><span class="pre">GEN_OBS</span></code>.</td></tr>
+</tbody>
+</table>
+<p>Observe that since the actual result file should be generated by the forward
+model, it is not possible for ERT to fully validate the <code class="docutils literal notranslate"><span class="pre">GEN_DATA</span></code> keyword
+at configure time. If for instance your forward model generates a file
+<code class="docutils literal notranslate"><span class="pre">SimulatedWOC_0</span></code> (without the <code class="docutils literal notranslate"><span class="pre">.txt</span></code> extension you have configured), the
+configuration problem will not be detected before ERT eventuallly fails to load
+the file <code class="docutils literal notranslate"><span class="pre">SimulatedWOC_0.txt</span></code>.</p>
 </div>
 <div class="section" id="keyword-results-custom-kw">
 <h3>Keyword results: CUSTOM_KW<a class="headerlink" href="#keyword-results-custom-kw" title="Permalink to this headline">¶</a></h3>
