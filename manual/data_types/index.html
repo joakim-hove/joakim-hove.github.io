@@ -494,15 +494,24 @@ used to transform the user input of parameter distribution.
 loaded into ERT. <code class="docutils literal notranslate"><span class="pre">OUTPUT_TRANSFORM:FUNC</span></code> is a function which will be applied to
 the field when it is exported from ERT, and <code class="docutils literal notranslate"><span class="pre">FUNC</span></code> is the name of a transformation
 function to be applied. The avaialble functions are listed below:</p>
-<blockquote>
-<div>“POW10”       : This function will raise x to the power of 10: y = 10^x.
-“TRUNC_POW10” : This function will raise x to the power of 10 - and truncate lower values at 0.001.
-“LOG”         : This function will take the NATURAL logarithm of x: y = ln(x).
-“LN”          : This function will take the NATURAL logarithm of x: y = ln(x).
-“LOG10”       : This function will take the log10 logarithm of x: y = log10(x).
-“EXP”         : This function will calculate y = exp(x).
-“LN0”         : This function will calculate y = ln(x + 0.000001
-“EXP0”        : This function will calculate y = exp(x) - 0.000001</div></blockquote>
+<dl class="docutils">
+<dt>POW10</dt>
+<dd>This function will raise x to the power of 10: <span class="math notranslate">\(y = 10^x\)</span>.</dd>
+<dt>TRUNC_POW10</dt>
+<dd>This function will raise x to the power of 10 - and truncate lower values at 0.001.</dd>
+<dt>LOG</dt>
+<dd>This function will take the NATURAL logarithm of x: <span class="math notranslate">\(y = ln(x)\)</span>.</dd>
+<dt>LN</dt>
+<dd>This function will take the NATURAL logarithm of x: <span class="math notranslate">\(y = ln(x)\)</span>.</dd>
+<dt>LOG10</dt>
+<dd>This function will take the log10 logarithm of x: <span class="math notranslate">\(y = log10(x)\)</span>.</dd>
+<dt>EXP</dt>
+<dd>This function will calculate <span class="math notranslate">\(y = exp(x)\)</span>.</dd>
+<dt>LN0</dt>
+<dd>This function will calculate <span class="math notranslate">\(y = ln(x + 0.000001\)</span></dd>
+<dt>EXP0</dt>
+<dd>This function will calculate <span class="math notranslate">\(y = exp(x) - 0.000001\)</span></dd>
+</dl>
 <p>The most common scenario is that a log-normal distributed permeability in RMS is
 transformed to normally distributted in ERT, to achieve this you do:</p>
 <ol class="arabic simple">
