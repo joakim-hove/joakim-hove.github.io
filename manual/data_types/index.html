@@ -444,10 +444,9 @@ these realisations should typically be in the form of files
 is initializing the data. The number <code class="docutils literal notranslate"><span class="pre">0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">...</span></code> should be replaced with
 the integer format specified <code class="docutils literal notranslate"><span class="pre">%d</span></code> - which ERT will replace with the
 realization number runtime, i.e.</p>
-<dl class="docutils">
-<dt>::</dt>
-<dd>FIELD … INIT_FILES:/path/poro_%d.grdecl</dd>
-</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FIELD</span> <span class="o">...</span> <span class="n">INIT_FILES</span><span class="p">:</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">poro_</span><span class="o">%</span><span class="n">d</span><span class="o">.</span><span class="n">grdecl</span>
+</pre></div>
+</div>
 <p>in this case. The files can be in eclipse grdecl format or rms roff format; the
 type is determined from the extension so you should use the common extensions
 <code class="docutils literal notranslate"><span class="pre">grdecl</span></code> or <code class="docutils literal notranslate"><span class="pre">roff</span></code>.</p>
@@ -512,8 +511,9 @@ function to be applied. The avaialble functions are listed below:</p>
 <dt>EXP0</dt>
 <dd>This function will calculate <span class="math notranslate">\(y = exp(x) - 0.000001\)</span></dd>
 </dl>
-<p>The most common scenario is that a log-normal distributed permeability in RMS is
-transformed to normally distributted in ERT, to achieve this you do:</p>
+<p>The most common scenario is that a log-normal distributed permeability in the
+geo modelling software is transformed to become normally distributted in ERT, to
+achieve this you do:</p>
 <ol class="arabic simple">
 <li><code class="docutils literal notranslate"><span class="pre">INIT_TRANSFORM:LOG</span></code> To ensure that the variables which were initially
 log-normal distributed are transformed to normal distribution when they are
@@ -531,10 +531,10 @@ format. The surface keyword is configured like this:</p>
 </pre></div>
 </div>
 <p>The first argument, TOP in the example above, is the identifier you want to use
-for this surface in ert. The OUTPUT_FILE key is the name of surface file which
-ERT will generate for you, INIT_FILES points to a list of files which are used
-to initialize, and BASE_SURFACE must point to one existing surface file. When
-loading the surfaces ERT will check that all the headers are compatible. An
+for this surface in ert. The <code class="docutils literal notranslate"><span class="pre">OUTPUT_FILE</span></code> key is the name of surface file
+which ERT will generate for you, <code class="docutils literal notranslate"><span class="pre">INIT_FILES</span></code> points to a list of files which are
+used to initialize, and <code class="docutils literal notranslate"><span class="pre">BASE_SURFACE</span></code> must point to one existing surface file.
+When loading the surfaces ERT will check that all the headers are compatible. An
 example of a surface IRAP file is:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="mi">996</span>   <span class="mi">511</span>     <span class="mf">50.000000</span>     <span class="mf">50.000000</span>
 <span class="mf">444229.9688</span>   <span class="mf">457179.9688</span>  <span class="mf">6809537.0000</span>  <span class="mf">6835037.0000</span>
@@ -548,7 +548,7 @@ example of a surface IRAP file is:</p>
 </pre></div>
 </div>
 <p>The surface data will typically be fed into other programs like Cohiba or RMS.
-The data can be updated using e.g. the Smoother.</p>
+The surface data can be updated using the Smoother.</p>
 <p><strong>Initializing from the FORWARD MODEL</strong></p>
 <p>All the parameter types like FIELD,GEN_KW,GEN_PARAM and SURFACE can be
 initialized from the forward model. To achieve this you just add the setting
@@ -738,6 +738,22 @@ the file <code class="docutils literal notranslate"><span class="pre">SimulatedW
 </div>
 <div class="section" id="keyword-results-custom-kw">
 <h3>Keyword results: CUSTOM_KW<a class="headerlink" href="#keyword-results-custom-kw" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">CUSTOM_KW</span></code> datatype is in a way the dynamic analogue to the <code class="docutils literal notranslate"><span class="pre">GEN_KW</span></code>
+datatype. It is intended to load a list of key,value pairs from a file generated
+by the forward model. The <code class="docutils literal notranslate"><span class="pre">CUSTOM_KW</span></code> datatype is configured like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CUSTOM_KW</span> <span class="n">KEYWORD</span> <span class="n">RESULT_FILE</span><span class="p">:</span><span class="o">/</span><span class="n">name</span><span class="o">/</span><span class="n">of</span><span class="o">/</span><span class="n">file</span>
+</pre></div>
+</div>
+<p>Observe that even though it is a dynamic result type the <code class="docutils literal notranslate"><span class="pre">CUSTOM_KW</span></code> data type
+can not be used as the simulated value when comparing with an observation. An
+example of <code class="docutils literal notranslate"><span class="pre">CUSTOM_KW</span></code> file generated by the forward model could look like
+this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">KEY1</span> <span class="mi">10</span>
+<span class="n">KEY2</span> <span class="mi">246</span>
+<span class="n">KEY3</span> <span class="mi">02</span>
+</pre></div>
+</div>
+<p>I.e. interleaved string keys and corresponding numeric values.</p>
 </div>
 </div>
 <div class="section" id="enkf-heritage">
