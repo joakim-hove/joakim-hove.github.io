@@ -1,9 +1,15 @@
 Running simulations - the Forward Model
 =======================================
 
+A *very* important part of ERT functionality.
+
+
 
 The forward model
 -----------------
+
+The runpath directory
+---------------------
 
 Default jobs
 ~~~~~~~~~~~~

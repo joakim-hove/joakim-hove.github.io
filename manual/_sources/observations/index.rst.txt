@@ -30,6 +30,8 @@ associated keyword for each class:
  - Exotic observations (e.g. data from 4D seismic): The
    GENERAL_OBSERVATION keyword.
 
+Observe that observations and datatypes are quite tightly linked together.
+Before reading this you should have a firm grasp of the dynamic data types.
 
 The HISTORY_OBSERVATION keyword
 -------------------------------
