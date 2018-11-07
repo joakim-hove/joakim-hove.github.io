@@ -1,7 +1,7 @@
 Introduction to ERT and Ensemble based methods
 ==============================================
 
-The reservoir model for a green field is based on a range of subsurface input
+The reservoir model for a green field is based on a range subsurface input
 including seismic data, a geological concept, well logs and fluid samples. All
 of this data is uncertain, and it is quite obvious that the resulting reservoir
 model is quite uncertain. Although uncertain - reservoir models are still the
@@ -22,12 +22,12 @@ Then the the actual model updating goes like this:
 
 1. Simulate the behaviour of the field and assemble simulated data :math:`s`. 
 2. Compare the simulated simulated data :math:`s` with the observed data :math:`d`. 
-3. Based on the misfit between :math:`s` and :math:`d` updated parameters 
+3. Based on the misfit between :math:`s` and :math:`d` updated parameters are
    :math:`\{\lambda'\}` are calculated.   
 
 Model updating falls into the general category of *inverse problems* - i.e. we
 know the results and want to determine the input parameters which reproduce
-these results. In statistical literature the the process is often called
+these results. In statistical literature the phe process is often called
 *conditioning*.
 
 It is very important to remember that the sole reason for doing model updating
@@ -40,7 +40,7 @@ Embrace the uncertainty
 
 The main purpose of the model updating process is to reduce the uncertainty in
 the description of the reservoir, however it is important to remember that the
-goal is *not* to get rid of all the uncertainty and find one true answer. There
+goal is *not* to get rid of all the uncertainty and find ont true answer. There
 are two reasons for this:
 
 1. The data used when conditioning the model is also uncertain. E.g.
@@ -143,14 +143,6 @@ quantities of interest are:
    this is the position estimated from :math:`x_{k-1}` and :math:`f(x,t)`, but
    before the observed data :math:`d_k` is taken into account.
 
-:math:`d_k` The observed values which are used in the updating process, the
-   :math:`d_k` values are measured with a process external to the model
-   updating.
-
-:math:`\sigma_d` The uncertainty in the measurement :math:`d_k` - a reliable
-      estimate of this uncertainty is essential for the algorithm to place
-      "correct" weight on the measured values.
-
 :math:`f(x,t)`
    The equation of motion - *forward model* - which propagates
       :math:`x_{k-1} \to x_k^{\ast}` 
@@ -170,10 +162,10 @@ and uncertainty are:
    \sigma_k^2 = \sigma_k^i{2\ast}\left(1 - \frac{\sigma_k^{2\ast}}{\sigma_d^2 + \sigma_k^{2\ast}}\right)
 
 
-Looking at the equation for the position update we see that the analyzed
+Looking at the equation for the position update we see that the analyyzed
 position :math:`x_k` is a weighted sum over the forecasted positon
 :math:`x_k^{\ast}` and measured position :math:`d_k` - where the weighting
-depends on the relative weight of the uncertainties :math:`\sigma_k^{\ast}` and
+depends on the relative weight of the uncertainties :math:`sigma_k^{\ast}` and
 :math:`\sigma_d`. For the updated uncertainty the key take away message is that
 the updated uncertainty will always be smaller than the forecasted uncertainty:
 :math:`\sigma_k < \sigma_k^{\ast}`.
