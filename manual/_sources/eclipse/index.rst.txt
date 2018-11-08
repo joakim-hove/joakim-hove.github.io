@@ -1,3 +1,44 @@
-Eclipse configuration
-=====================
+Eclipse - or not
+================
+
+In the very first versions of ERT it was all about running Eclipse, there was no
+general forward model. The concept of general forward model came quite quickly
+and since then the special treatment of Eclipse has gradually been reduced. It
+is now possible to run a forward model without Eclipse at all, but ERT is still
+quite far from a situation where Eclipse is just any other forward model. For
+good and for bad there is quite a lot of functionality in ERT which is
+specifically targeted at Eclipse, this means that configuration will be
+simpler - better error messages and so on.
+
+Eclipse keywords
+----------------
+
+``DATA_FILE``
+  This is the name of ECLIPSE data file used to control the simulations. The
+  datafile used with this keyword should be prepared for use with ERT, and will
+  generally not be a 100% valid ECLIPSE data file:
+
+	::
+
+		-- Load the data file called ECLIPSE.DATA
+		DATA_FILE ECLIPSE.DATA
+
+  When actually running the simulations ....  
+
+``ECLBASE``
+  This is the name of the simulations ....
+
+``GRID``
+  This should be the name of an existing GRID/EGRID file. The main use of the
+  grid is to map out active and inactive cells when using ``FIELD`` data. If you
+  do not use ``FIELD`` data you do not need the ``GRID`` keyword.
+
+
+
+Running with a different reservoir simulator
+--------------------------------------------
+
+Running without a reservoir simulator
+-------------------------------------
+
 

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Eclipse configuration &#8212; ERT 2.3 documentation</title>
+    <title>Eclipse - or not &#8212; ERT 2.3 documentation</title>
     <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" src="../_static/documentation_options.js"></script>
@@ -41,6 +41,16 @@
     </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../manual.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Eclipse - or not</a><ul>
+<li><a class="reference internal" href="#eclipse-keywords">Eclipse keywords</a></li>
+<li><a class="reference internal" href="#running-with-a-different-reservoir-simulator">Running with a different reservoir simulator</a></li>
+<li><a class="reference internal" href="#running-without-a-reservoir-simulator">Running without a reservoir simulator</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="../observations/index.html"
                         title="previous chapter">Configuring observations for ERT</a></p>
@@ -74,8 +84,45 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="eclipse-configuration">
-<h1>Eclipse configuration<a class="headerlink" href="#eclipse-configuration" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="eclipse-or-not">
+<h1>Eclipse - or not<a class="headerlink" href="#eclipse-or-not" title="Permalink to this headline">¶</a></h1>
+<p>In the very first versions of ERT it was all about running Eclipse, there was no
+general forward model. The concept of general forward model came quite quickly
+and since then the special treatment of Eclipse has gradually been reduced. It
+is now possible to run a forward model without Eclipse at all, but ERT is still
+quite far from a situation where Eclipse is just any other forward model. For
+good and for bad there is quite a lot of functionality in ERT which is
+specifically targeted at Eclipse, this means that configuration will be
+simpler - better error messages and so on.</p>
+<div class="section" id="eclipse-keywords">
+<h2>Eclipse keywords<a class="headerlink" href="#eclipse-keywords" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">DATA_FILE</span></code></dt>
+<dd><p class="first">This is the name of ECLIPSE data file used to control the simulations. The
+datafile used with this keyword should be prepared for use with ERT, and will
+generally not be a 100% valid ECLIPSE data file:</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span> <span class="n">Load</span> <span class="n">the</span> <span class="n">data</span> <span class="n">file</span> <span class="n">called</span> <span class="n">ECLIPSE</span><span class="o">.</span><span class="n">DATA</span>
+<span class="n">DATA_FILE</span> <span class="n">ECLIPSE</span><span class="o">.</span><span class="n">DATA</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p class="last">When actually running the simulations ….</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">ECLBASE</span></code></dt>
+<dd>This is the name of the simulations ….</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">GRID</span></code></dt>
+<dd>This should be the name of an existing GRID/EGRID file. The main use of the
+grid is to map out active and inactive cells when using <code class="docutils literal notranslate"><span class="pre">FIELD</span></code> data. If you
+do not use <code class="docutils literal notranslate"><span class="pre">FIELD</span></code> data you do not need the <code class="docutils literal notranslate"><span class="pre">GRID</span></code> keyword.</dd>
+</dl>
+</div>
+<div class="section" id="running-with-a-different-reservoir-simulator">
+<h2>Running with a different reservoir simulator<a class="headerlink" href="#running-with-a-different-reservoir-simulator" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="running-without-a-reservoir-simulator">
+<h2>Running without a reservoir simulator<a class="headerlink" href="#running-without-a-reservoir-simulator" title="Permalink to this headline">¶</a></h2>
+</div>
 </div>
 
 
