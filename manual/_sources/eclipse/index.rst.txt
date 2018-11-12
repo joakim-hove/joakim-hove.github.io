@@ -36,7 +36,7 @@ Eclipse keywords
   When actually running the simulations the file given with the ``DATA_FILE``
   keyword will be used as a template, and a realization specific datafile will
   be written to the runpath folder, the name of this file is given by the
-  :ref:```ECLBASE`` <target_ECLBASE>` keyword.  
+  :ref:`ECLBASE <target_ECLBASE>` keyword.  
 
 .. _target_ECLBASE
 ``ECLBASE``
